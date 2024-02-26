@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Dreys-bot.github.io
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
         uses: withastro/action@v2
