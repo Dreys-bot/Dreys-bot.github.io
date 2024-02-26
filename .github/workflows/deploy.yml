@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Dreys-bot.github.io
         uses: actions/checkout@v4
-      - name: Install, build, and upload your site
+      - name: Install, build, and upload Dreys-bot.github.io output
         uses: withastro/action@v2
         # with:
           # path: . # The root location of your Astro project inside the repository. (optional)
