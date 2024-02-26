@@ -13,7 +13,7 @@ type IRecentProjectsProps = {
   projectList: MarkdownInstance<IProjectFormat>[];
 };
 
-const RecentProjects = ({ projectList }: IRecentProjectsProps) => {
+const RecentProjects = (props: IRecentProjectsProps) => {
   return (
     <Section
       title={
@@ -23,7 +23,7 @@ const RecentProjects = ({ projectList }: IRecentProjectsProps) => {
       }
     >
       <div className="flex flex-col gap-6">
-        {projectList.map((project) => {
+        {props && props.projectList.map((project) => {
           // Project link
           const link = project.frontmatter.githubPage
             ? project.frontmatter.githubPage
