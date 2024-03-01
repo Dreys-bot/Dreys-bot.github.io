@@ -31,7 +31,7 @@ by enabling large-scale collaborations and preserving data privacy.
 
 # Introduction
 
-Federated learning (1) is a machine learning technique that allows multiple parties to collaboratively
+Federated learning is a machine learning technique that allows multiple parties to collaboratively
 train a machine learning model without sharing their private data. In traditional machine learning, all data is
 collected and centralized in a single location, such as a server or data center, where the model is trained.
 However, in federated learning, the data remains decentralized and is stored locally on devices such as
@@ -43,23 +43,18 @@ using its private data and sends the updated model weights to the central server
 the updates and uses them to improve the model. This process is repeated iteratively until the desired level of
 accuracy is achieved.
 
-One of the key advantages of federated learning is that it allows organizations to collaborate and train
-machine learning models on a large amount of data without the need to centralize or share their data,
-preserving data privacy and security. Federated learning is particularly useful in scenarios where the data is
-sensitive, such as healthcare, finance, and personal devices.
-Federated learning has a wide range of applications, including personalized recommendation systems,
-natural language processing, image and video recognition, and predictive maintenance. However, there are
-also some challenges associated with federated learning, such as communication and computational costs, as
-well as the risk of biased or inaccurate models. Nonetheless, with ongoing research and advancements in
-federated learning, it has the potential to revolutionize the way machine learning models are trained and
-deployed in various industries.
+Federated learning has the potential to revolutionize the way machine learning models are trained and deployed in various industries. One of its key advantages is that it allows organizations to collaborate and train machine learning models on a large amount of data without the need to centralize or share their data. This preserves data privacy and security, making it particularly useful in scenarios where the data is sensitive, such as healthcare, finance, and personal devices.
+
+The applications of federated learning are wide-ranging and diverse. It can be used in personalized recommendation systems, natural language processing, image and video recognition, and predictive maintenance. However, there are also challenges associated with federated learning. Communication and computational costs can be significant, and there is a risk of biased or inaccurate models.
+
+Despite these challenges, ongoing research and advancements in federated learning are addressing these issues. With further progress, federated learning holds great promise in enabling organizations to leverage large amounts of data for machine learning while preserving privacy and security. This has the potential to transform various industries and unlock new possibilities for machine learning applications.
 
 # Architecture of federated learning
 
 ![architecture](/assets/images/FederatedLearning/architecture.png)
 
 
-The architecture of federated learning (2) typically consists of three main components: the client
+The architecture of federated learning typically consists of three main components: the client
 devices, the central server, and the machine learning model.
 
 **Client devices**: The client devices are the endpoints that hold the local data and are used to train the machine learning model. These devices can be mobile phones, laptops, IoT devices, or any other device capable of running a machine learning algorithm. In federated learning, the data remains on the client devices, and the algorithm runs on each device locally.
@@ -70,13 +65,13 @@ devices, the central server, and the machine learning model.
 
 # Types of federated learning
 
-According to the distribution features of the data, federated learning may be categorized. Assume that the data matrix Di represents the information owned by each individual data owner, i.e., each sample and each characteristic are represented by a row and a column, respectively, in the matrix. At the same time, label data may be included in certain datasets as well. For example, we call the sample ID space I, the feature space X and the label space Y. When it comes to finance, labels may represent the credit of customers; when it comes to marketing, labels can represent the desire of customers to buy; and when it comes to education, labels can represent students' degrees. The training dataset includes the features X, Y, and IDs I. Federated learning may be classified as horizontally, vertically, or as federated transfer learning (FTL) depending on how the data is dispersed among the many parties in the feature and sample ID space. We cannot guarantee that the sample ID and feature spaces of the data parties are similar.
+According to the distribution features of the data, federated learning may be categorized. Assume that the data matrix $D_i$ represents the information owned by each individual data owner, i.e., each sample and each characteristic are represented by a row and a column, respectively, in the matrix. At the same time, label data may be included in certain datasets as well. For example, we call the sample ID space $I$, the feature space $X$ and the label space $Y$. When it comes to finance, labels may represent the credit of customers; when it comes to marketing, labels can represent the desire of customers to buy; and when it comes to education, labels can represent students' degrees. The training dataset includes the features $X$, $Y$, and IDs $I$. Federated learning may be classified as horizontally, vertically, or as federated transfer learning (FTL) depending on how the data is dispersed among the many parties in the feature and sample ID space. We cannot guarantee that the sample ID and feature spaces of the data parties are similar.
 
 ## Federated Transfer Learning (FTL)
 
 ![FTL](/assets/images/FederatedLearning/FTL.png)
 
-Federated transfer learning is suitable while two datasets differ not only just in sample size but also in feature space. Consider a bank in China and an e-commerce firm in the United States as two separate entities. The small overlap between the user populations of the two institutions is due to geographical constraints. However, only a tiny fraction of the feature space from both companies overlaps as a result of the distinct enterprises. For example, transfer-learning may be used to generate solutions of problems for the full dataset and features under a federation. Specifically, a typical portrayal across the 2 feature spaces is learnt by applying restricted general sample sets as well as then used to produce prediction results for samples with just one-sided features. There are difficulties that FTL addresses that cannot be addressed by current federated learning methods, which is why it is an essential addition to the field.
+Federated transfer learning is suitable while two datasets differ not only just in sample size but also in feature space. Consider a bank in China and an e-commerce firm in the United States as two separate entities. The small overlap between the user populations of the two institutions is due to geographical constraints. However, only a tiny fraction of the feature space from both companies overlaps as a result of the distinct enterprises. For example, transfer-learning may be used to generate solutions of problems for the full dataset and features under a federation. Specifically, a typical portrayal across the 2 feature spaces is learnt by applying restricted general sample sets as well as then used to produce prediction results for samples with just one-sided features. There are challenges that FTL addresses that cannot be addressed by current federated learning methods, which is why it is an essential addition to the field.
 
 $X_i \neq X_{j^{\prime}} Y_i \neq Y_{j^{\prime}} I_i \neq I_j \forall D_{i^{\prime}} D_{j^{\prime}}, i \neq j$
 
@@ -85,22 +80,32 @@ $X_i \neq X_{j^{\prime}} Y_i \neq Y_{j^{\prime}} I_i \neq I_j \forall D_{i^{\pri
 
 ### Vertical Federated Learning
 ![VFL](/assets/images/FederatedLearning/VFL.png)
-Machine-learning techniques for vertically partitioned data have been suggested that preserve privacy, including gradient descent , classification , secure linear regression , association rule mining [46], and cooperative statistical analysis. Authors of  have presented a VFL method for training a logistic regression model that preserves individual privacy. Entity resolution and learning performance were investigated by the authors, who used Taylor approximation to approximate gradient and loss functions in order to provide homomorphic encryption for privacy-preserving computations. While 2 datasets share the same space of sample ID but vary in feature space, VFL, also known as feature-based FL (Figure 2(b)), may be used. An ecommerce firm and a bank are two examples of businesses in the same city that operate in quite different ways. The intersection of their user spaces is enormous since their user sets are likely to include most of the inhabitants in the region. Banks and e-commerce, on the other hand, keep track of their customers' income and spending habits and credit ratings; therefore, their feature sets are vastly different. Assume that both parties seek a product purchase prediction model based on product and user data. These distinct characteristics are aggregated, and the training loss and gradients are computed to develop a model that incorporates data from both parties jointly. In a federated learning system, every participating party has the same 12 identity and position, and the federal method helps everybody build a "common wealth" plan. 
+Machine-learning techniques for vertically partitioned data have been suggested that preserve privacy, including gradient descent, classification, secure linear regression, association rule mining, and cooperative statistical analysis. Some studies have presented a VFL method for training a logistic regression model that preserves individual privacy. The authors investigated entity resolution and learning performance, utilizing Taylor approximation to approximate gradient and loss functions for privacy-preserving computations.
 
-**Security Definition of VFL**: Participant honesty and curiosity are assumed in a vertically federated-learning system. In a 2-party case, 2 parties are not collaborating, as well as only one is understood by an opponent. Only the corrupted client may learn data from the other client, and only that which the input or output disclose. Occasionally, a semi-honest third party (STP) is included to permit safe calculations between the parties, in which it is believed that the STP does not collude. These protocols are protected by SMC's formal privacy proof. At the conclusion of the learning process, every party has just the parameters of associated models with their own unique traits left in their memory bank. As a result, the two parties must work together at the inference stage to provide a result.
+In the context of VFL, or feature-based FL, two datasets may share the same sample ID space but differ in feature space. For instance, an e-commerce firm and a bank, both operating in the same city, have distinct ways of conducting business. However, their user spaces intersect significantly, as they likely include most of the region's inhabitants. While banks and e-commerce platforms track customers' income, spending habits, and credit ratings, their feature sets differ greatly.
+
+Consider a scenario where both parties aim to develop a product purchase prediction model based on product and user data. These distinct characteristics are aggregated, and the training loss and gradients are computed to create a model that incorporates data from both parties jointly.
+
+In a federated learning system, every participating party has the same identity and position, and the federated method facilitates the development of a "common wealth" plan for all involved.
+
+
 
 ### Horizontal Federated Learning
 
 ![HTL](/assets/images/FederatedLearning/HFL.png)
 
-For datasets that share a feature space but vary in the number of samples, sample-based federated learning or horizontal federated learning is presented. There is very little overlap between the user bases of two regional banks with very divergent customer bases. Nevertheless, due to the fact that their businesses are so similar, the feature spaces are identical. Collaboratively deep learning was suggested. Participants train individually and exchange just a limited number of parameter changes. Android phone model upgrades were suggested by Google in 2017 as a horizontal federated-learning approach. One user's Android phone changes the model parameters locally, then uploads them to the training the centralized model, Android cloud in concert with other owners of data. Their federated-learning approach is further supported by a safe aggregation technique that protects the aggregated user updates in privacy. To protect against the central server, model parameters are aggregated using additively homomorphic encryption. Several sites may execute independent tasks while maintaining security and sharing knowledge by using a multitask-style FL system. High fault tolerance stragglers, and communication costs difficulties may all be addressed by their multitask learning paradigm. It was suggested to establish a safe client–server structure where data is partitioned 13 by users as well as models developed on client devices work together to produce a global federated algorithm in the framework of an interconnected federated learning system. The model-building procedure prevents any data from leaking. Study looked at ways to reduce transmission costs so that data from remote mobile clients may be used in the training of centrally-located models. Deep gradient compression has recently been presented as a way to significantly decrease the bandwidth required for distributing large-scale training.
+HFL can be applied in scenarios in which datasets at different sites share overlapping feature space but differ in sample space as illustrated in the figure below. It resembles the situation that data is horizontally partitioed inside a tabular view. For example, two regional banks may have very different user groups from their respective regions, and the intersection set of their users is very small. However, their business models are very similar. Hence, the feature spaces
+of their datasets are the same. Formally, we summarize the conditions for HFL as:
+
+$X_i = X_{j} Y_i = Y_{j} I_i \neq I_j \forall D_{i} D_{j}, i \neq j$
+
+where the data feature spacce and label space pair o fthe two parties, i.e, $(X_i, Y_i)$ and $(X_j, Y_j)$ are assumed to be the same, whereas the user identifies $I_i$ and $I_j$ are assumed to be different. $D_i$ and $D_j$ denote the datasets of the $i$th party and the $j$th party respectively.
 
 
-**Security Definition of HFL**: An honest-but-curious server is commonly assumed in a horizontally federated learning system. That is, only the server has the ability to intrude on the privacy of the data participants it hosts. These pieces of craftsmanship serve as evidence of their own safety. Additional privacy concerns have been raised by the recent proposal of a new security model that takes malevolent users into account. At the conclusion of the session, all of the parameters of the universal model are made available to each and every participant.
 
 
 # Process of training
-The federated learning process (3) typically follows the following steps:
+The federated learning process typically follows the following steps:
 
 **Initialization**: The machine learning model is initialized on the central server and distributed to the client
 devices.
@@ -123,7 +128,7 @@ to learn from a larger dataset and converge to a more accurate solution.
 
 ## How to process training?
 
-The process of training a machine learning model (4) involves several steps, which can vary depending on the specific algorithm and data being used. However, a general overview of the process is as follows:
+The process of training a machine learning model involves several steps, which can vary depending on the specific algorithm and data being used. However, a general overview of the process is as follows:
 
 **Data preprocessing**: The first step in training a machine learning model is to preprocess the data. This can involve tasks such as cleaning the data, transforming it into a usable format, and splitting it into training and testing sets. 
 

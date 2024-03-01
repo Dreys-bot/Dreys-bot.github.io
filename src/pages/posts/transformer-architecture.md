@@ -9,11 +9,10 @@ imgAlt: 'Image post'
 
 # Introduction to transformers neural networks
 
+A transformer is a type of neural network architecture known for its property attention. Transformers are currently state of the art within language modelling, and they are used in everything from classification to generative models.They were originally known for their strong performance in machine translation, and are now a de facto standard
+for building large-scale self-supervised learning systems.  The past few years have seen the rise of Transformers not only in natural language
+processing  (NLP) but also in several other fields, such as computer vision and multi-modal processing. As Transformers continue to mature, these models are playing an increasingly important role in the research and application of artificial intelligence (AI).
 
-Transformers are a neural network architecture proposed in 2017, by Google researchers in collaboration with the University of Toronto, in a research paper that has become legendary: [Attention is all you need](https://arxiv.org/abs/1706.03762).
-
-They have made it possible to reach unprecedented levels on subjects such as language understanding, with reference models such as BERT or GPT.
-In this article we will see what transformers are, we will talk about their operation and their applications.
 
 # From RNNs to transformers
 

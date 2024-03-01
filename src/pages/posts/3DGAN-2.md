@@ -7,8 +7,16 @@ imgSrc: '/assets/images/3DGAN-2/index.jpeg'
 imgAlt: 'Image post 3'
 ---
 
-This post is to study  **generation and reconstruction 3D shapes** with **3D-IWGAN(3D-Improved Wassertein GAN)**. It is an improved GAN model approach and used voxelized objects from dataset to train deep generator and discriminator networks.
+# Introduction
+Generative Adversarial Networks (GANs) have emerged as powerful models for generating realistic and high-quality data. However, they often suffer from training instability, hindering their effectiveness in certain applications. In this article, we present an extended method called 3D-IWGAN (3D-Improved Wasserstein GAN), which addresses the training instability issue and enables improved generation of 3D shapes.
 
+The 3D-IWGAN model employs the Wasserstein distance normalized with gradient penalization, providing a more stable training process. By leveraging voxelized objects from a dataset, deep generator and discriminator networks are trained to reconstruct 3D shapes from 2D images and perform shape completion. This improved GAN approach overcomes the limitations of traditional GANs, allowing for more accurate and reliable generation of objects from the joint distribution.
+
+The significance of our research lies in the enhanced stability and quality of the generated 3D shapes. With 3D-IWGAN, we aim to revolutionize the field of generative modeling by providing a robust and efficient solution for generating complex 3D shapes. This has wide-ranging implications for various domains, including computer graphics, virtual reality, and manufacturing.
+
+Throughout this article, we will delve into the details of the 3D-IWGAN model, discussing its architecture, and the advantages it offers over traditional GANs. 
+
+# Method
 |Method   |3D-IWGAN |
 |---------|---------|
 |3D model |voxels|
@@ -22,7 +30,6 @@ This post is to study  **generation and reconstruction 3D shapes** with **3D-IWG
 |     |Discriminator|
 |     |Evaluate the output to improve training|
 
-# Method
 3D-IWGAN architecture utilizes voxelized objects from a data set to train deep generator and discriminator networks in tandem, with the goal of generating realistic 3D object shapes. It employs an improved version of the standard GAN, by exploiting the Wasserstein distance normalised with gradient penalization as a training objective. The following details the improvement that we made to the standard GAN in order to achieve WGAN first. After we will talk about the improvement of WGAN to be IWGAN.
 
 
@@ -90,12 +97,14 @@ Wasserstein Gan(WGAN) is an extension of the regular GAN that seeks an alternate
 
 ![GAN architecture](/assets/images/3DGAN-2/GANArchi.png) 
 
+In a traditional GAN, the discriminator receives input from both real data samples and generated fake images. The generator then produces a binary output, either "True" or "False," indicating whether the generated sample is considered real or fake. This binary output serves as a classification decision made by the discriminator. It follows a binary classification framework, where the discriminator's role is to accurately classify the samples. The generator learns to improve its output based on the discriminator's feedback, aiming to generate samples that can deceive the discriminator and be classified as real.
+
 ![WGAN Architecture](/assets/images/3DGAN-2/WGANArchi.png)
-We can see that in the normal GAN when the discirminator gets its input both from the real data sample and also the fake images , the generator outputs eiter **True or False** that is fake or real. It is a **binary output**. But in WGAN, **the discriminator don't classify  rather for each instance, the discriminator outputs a number**. This number doesn't have to be less than one or greater than zero so we cannot use 0.5 as a threshold to decide whether an instanceis real or not. The WGAN's discriminator training just tries to make the output bigger for real instances and smaller for fake. The WGAN changes the discriminator model with the **critic** that scores the realness or fakeness of a given image.
+On the other hand, the Wasserstein Generative Adversarial Network (WGAN) takes a different approach. In WGAN, the discriminator does not perform classification. Instead, for each instance it receives, the discriminator outputs a continuous number. This number is not constrained to be less than one or greater than zero, rendering the traditional threshold of 0.5 inadequate for deciding the realness of an instance. In WGAN, the discriminator's training objective is to make the output larger for real instances and smaller for fake instances. To achieve this, WGAN introduces a fundamental change by replacing the discriminator model with a "critic." The critic's role is to score the realness or fakeness of a given image, providing a continuous evaluation rather than a binary classification. This scoring mechanism allows for a more nuanced assessment of the quality and realism of generated samples, ultimately leading to improved training dynamics and higher-quality generated outputs.
 
 # How WGAN become IWGAN?
 
-Several study showed that the recent method known as 3DGAN shas the Ability to generate realistic samples of 3D object shapes, categorize 3D shapes, and reconstruct 3D shapes from 2D images. 3DGAN is based on the original generative adversarial network (GAN), an architecture and training approach well known to suffer from instability. While 3DGAN is proficient at producing high-quality objects from single classes, we observed that it is difficult to train on distributions involving multiple distinct object classes in varied poses, because as shown in the following figure, which leads the authors to mainly report the results of independent models, each trained only on a single object category.
+Several study showed that the recent method known as 3DGAN shas the ability to generate realistic samples of 3D object shapes, categorize 3D shapes, and reconstruct 3D shapes from 2D images. 3DGAN is based on the original generative adversarial network (GAN), an architecture and training approach well known to suffer from instability. While 3DGAN is proficient at producing high-quality objects from single classes, we observed that it is difficult to train on distributions involving multiple distinct object classes in varied poses, because as shown in the following figure, which leads the authors to mainly report the results of independent models, each trained only on a single object category.
 
 ![result](/assets/images/3DGAN-2/examplesResult.png)
 
