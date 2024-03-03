@@ -1,7 +1,7 @@
 ---
 layout: '@/templates/BasePost.astro'
-title: 3D Generative Adversial Model Part 1 - Introduction
-description: This article presents an introduction to generative adversarial networks (GANs), a cutting-edge deep learning technique. GANs utilize an adversarial game between two neural networks to generate synthetic data. Applications include image, audio and video synthesis. The goal is to provide a high-level overview of GANs' generative process and vast potential.
+title: 3D Generative Adversial Model
+description: This article introduces generative adversarial networks (GANs), a state-of-the-art deep learning technique. GANs use two neural networks in an adversarial game to generate synthetic data, with applications in image, audio, and video synthesis. The aim is to provide an overview of GANs' generative process and their immense potential.
 pubDate: 2023-12-04T00:00:00Z
 imgSrc: '/assets/images/3DGAN-1/index.jpg'
 imgAlt: 'Image post 2'

@@ -1,6 +1,6 @@
 ---
 layout: '@/templates/BasePost.astro'
-title: 3D Generative Adversial Model Part 2 - Wasserstein GAN Improvement
+title: Wasserstein GAN Improvement
 description: This article compares two adversarial generative models (standard GANs and WGANs). The goal is to understand how these competing networks can produce synthetic data in an unsupervised manner. We will look at how WGAN improves training stability, a key challenge in the field of generative learning.
 pubDate: 2023-12-05T00:00:00Z
 imgSrc: '/assets/images/3DGAN-2/index.jpeg'

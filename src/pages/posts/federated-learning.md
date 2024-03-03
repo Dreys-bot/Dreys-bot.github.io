@@ -1,8 +1,8 @@
 ---
 layout: '@/templates/BasePost.astro'
 title: Federated Learning
-description: This article introduces the concept of federated learning, a recent machine learning approach aimed at preserving the privacy of data used to train models. Unlike traditional centralized learning where data is aggregated in a single location, federated learning allows models to be trained directly on users' devices, without collecting or sharing the actual data.
-pubDate: 2022-06-03T00:00:00Z
+description: This article introduces federated learning, a modern approach to machine learning that preserves data privacy during model training. Unlike centralized learning, where data is collected in a single location, federated learning enables models to be trained directly on users' devices, without sharing the raw data.
+pubDate: 2024-02-15T00:00:00Z
 imgSrc: '/assets/images/FederatedLearning/work_FL.png'
 imgAlt: 'Image post 4'
 ---
