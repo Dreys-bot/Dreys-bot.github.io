@@ -7,14 +7,55 @@ imgSrc: '/assets/images/transformer-architecture/index.jpg'
 imgAlt: 'Image post'
 ---
 
-# Introduction to transformers neural networks
+# Introduction 
 
-A transformer is a type of neural network architecture known for its property attention. Transformers are currently state of the art within language modelling, and they are used in everything from classification to generative models.They were originally known for their strong performance in machine translation, and are now a de facto standard
-for building large-scale self-supervised learning systems.  The past few years have seen the rise of Transformers not only in natural language
-processing  (NLP) but also in several other fields, such as computer vision and multi-modal processing. As Transformers continue to mature, these models are playing an increasingly important role in the research and application of artificial intelligence (AI).
+Natural language processing (NLP) is a rapidly growing field of artificial intelligence. Being able to understand, generate and translate text effectively are challenges that open the way to many technological advances.
+For a long time, recurrent neural networks based on LSTM (long short-term memory) were the dominant approach for sequential modeling of language data. LSTMs are better than traditional RNNs at retaining information over long sequences thanks to their gate mechanism.
+However, their ability to effectively capture very long-range contextual dependencies remains limited. It is in this context that the Transformer model appeared in 2017, proposed by a team of Google researchers.
+Rather than using a recurrent structure, Transformers incorporate an attention mechanism allowing them to learn the contextual dependencies between elements in a sequence. This revolutionary architecture very quickly surpassed RNNs on many NLP tasks such as machine translation.
+Since then, Transformers have become omnipresent in the field. Giant models such as BERT or GPT-3 have enabled major advances in understanding and generating text. However, many questions remain open about their complex inner workings.
+In this article, we present in detail the Transformer architecture as well as its current applications.
+
+# Definitions
+
+## What is RNN? 
+**Recurrent neural networks (RNN)** are models specialized in the analysis of sequential data such as text or speech.
+Unlike traditional networks which only see information isolated from each other, RNNs are able to “memorize” what they have already seen thanks to their internal memory.
+This memory, called hidden state, keeps track of the previous context at each stage of processing a sequence. So when the RNN looks at a new element, it also remembers the previous ones thanks to its hidden state.
+This is what allows RNNs to efficiently analyze data like sentences or music, where the order of words/sounds is important. Rather than seeing everything separately, the RNN understands how each part fits together.
+Thanks to their dynamic internal memory, RNNs are today widely used in language and speech processing by machines. It is one of the key tools to teach them to communicate better with us. The figure below represent a global archtecture of RNN Where x, h, o are the input sequence, hidden state and output sequence respectively. U, V and W are the training weights.
+
+![](/assets/images/transformer-architecture/RNN.png)
 
 
-# From RNNs to transformers
+However, they face a limitation called the "vanishing gradient problem". Indeed, when an RNN processes the elements of a sequence one after the other, the influence of the first elements analyzed tends to fade over time. It's as if the network has more and more difficulty remembering the beginning of the sequence as it goes on. Then, **LSTM** model come to resolve it.
+
+## What is LSTM ?
+LSTM is a specific type of RNN architecture that addresses the vanishing gradient problem, which occurs when training deep neural networks. LSTMs leverage memory cells and gates to selectively store and retrieve information over long sequences, making them effective at capturing long-term dependencies. The figure blow shows the global architecture of LSTM model:
+
+![](/assets/images/transformer-architecture/LSTM.png)
+
+LSTMs have a **memory cell** allowing them to better manage long-term dependencies. This memory cell is made up of three **gates**:
+
+- The **input gate** determines the information from the $x_t$ input that must be added to the memory cell.
+- The **forget gate** decides which old information contained in cell ct-1 should be erased.
+- The **output gate** selects the ct information to extract for the calculation of the hidden state ht.
+
+At each time step, these gates control what is updated or not in the memory cell $c_t$.
+Unlike classic RNNs which only have a hidden state $h_t$, LSTMs have a second state ct representing the long-term memory in the memory cell. Thanks to this architecture and the regulation provided by the gates, LSTMs are better than RNNs at capturing contextual dependencies over long sequences, avoiding the vanishing gradient problem. This is what makes them perform better on language processing tasks.
+
+
+## What is a Transformer?
+The Transformer is a neural network architecture proposed in the seminal paper “Attention Is All You Need” by Vaswani et al. Unlike RNNs, Transformers do not rely on recurrence but instead operate on self-attention.
+Self-attention allows the model to weigh the importance of different input tokens when making predictions, enabling it to capture long-range dependencies without the need for sequential processing. Transformers consist of encoder and decoder layers, employing multi-head self-attention mechanisms and feed-forward neural networks.
+The figure below shows the architecture of a Transformer network:
+
+![](/assets/images/transformer-architecture/The-transformer-model-architecture.png)
+
+
+
+
+# From LSTM to transformers
 
 Neural networks are very efficient statistical models for analyzing complex data with variable formats.
 If models like CNNs emerged for processing visual data, for text processing, the neural network architectures that were used were RNNs, and more particularly LSTMs.
@@ -217,3 +258,35 @@ You might remember that at the very beginning of this article, we explained that
 The Generator is the last piece of our Transformer architecture, so we’re ready to put it all together.
 To know how to train and implement it all together.
 
+# Difference between RNNs and Transformers
+
+## Architecture
+RNNs are sequential models that process data one element at a time, maintaining an internal hidden state that is updated at each step. They operate in a recurrent manner, where the output at each step depends on the previous hidden state and the current input.
+
+Transformers are non-sequential models that process data in parallel. They rely on self-attention mechanisms to capture dependencies between different elements in the input sequence. Transformers do not have recurrent connections or hidden states.
+
+## Handling Sequence Length
+RNNs can handle variable-length sequences as they process data sequentially. However, long sequences can lead to vanishing or exploding gradients, making it challenging for RNNs to capture long-term dependencies.
+
+Transformers can handle both short and long sequences efficiently due to their parallel processing nature. Self-attention allows them to capture dependencies regardless of the sequence length.
+
+## Dependency Modeling
+
+RNNs are well-suited for modeling sequential dependencies. They can capture contextual information from the past, making them effective for tasks like language modeling, speech recognition, and sentiment analysis.
+
+Transformers excel at modeling dependencies between elements, irrespective of their positions in the sequence. They are particularly powerful for tasks involving long-range dependencies, such as machine translation, document classification, and image captioning.
+
+## Size of the Model
+The size of an RNN is primarily determined by the number of recurrent units (e.g., LSTM cells or GRU cells) and the number of parameters within each unit. RNNs have a compact structure as they mainly rely on recurrent connections and relatively small hidden state dimensions. The number of parameters in an RNN is directly proportional to the number of recurrent units and the size of the input and hidden state dimensions.
+
+Transformers tend to have larger model sizes due to their architecture. The main components contributing to the size of a Transformer model are self-attention layers, feed-forward layers, and positional encodings. Transformers have a more parallelizable design, allowing for efficient computation on GPUs or TPUs. However, this parallel processing capability comes at the cost of a larger number of parameters.
+
+## Training and Parallelisation
+For RNN, we mostly train it in a sequential approach, as the hidden state relies on previous steps. This makes parallelization more challenging, resulting in slower training times.
+
+On the other hand, we train Transformers in parallel since they process data simultaneously. This parallelization capability speeds up training and enables the use of larger batch sizes, which makes training more efficient.
+
+# Conclusion
+In this article, we explain the basic idea behind RNN/LSTM and Transformer. Furthermore, we compare these two types of networks from multiple aspects. We also talked about the architecture of transformers in the GPT model.
+While RNNs and LSTMs were the go-to choices for sequential tasks, Transformers are proving to be a viable alternative due to their parallel processing capability, ability to capture long-range dependencies, and improved hardware utilization. . However, RNNs still have value when it comes to tasks where temporal dependencies play a critical role.
+In conclusion, the choice between RNN/LSTM and Transformer models ultimately depends on the specific requirements of the task at hand, striking a balance between efficiency, accuracy and interpretability.

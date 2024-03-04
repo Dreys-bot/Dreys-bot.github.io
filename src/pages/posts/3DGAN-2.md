@@ -17,18 +17,6 @@ The significance of our research lies in the enhanced stability and quality of t
 Throughout this article, we will delve into the details of the 3D-IWGAN model, discussing its architecture, and the advantages it offers over traditional GANs. 
 
 # Method
-|Method   |3D-IWGAN |
-|---------|---------|
-|3D model |voxels|
-|Objective|-3D Generation <br></br> -3D Reconstruction|
-|Architecture|main architecture using GAN and an additional VAE to encode  the image  to latent vectors|
-|           |Input = RGB images or depth images|
-|     |Encoder|
-|     |normally distributed latent vectors|
-|     |Generator = decoder|
-|     |Output = 3D sample voxel models|
-|     |Discriminator|
-|     |Evaluate the output to improve training|
 
 3D-IWGAN architecture utilizes voxelized objects from a data set to train deep generator and discriminator networks in tandem, with the goal of generating realistic 3D object shapes. It employs an improved version of the standard GAN, by exploiting the Wasserstein distance normalised with gradient penalization as a training objective. The following details the improvement that we made to the standard GAN in order to achieve WGAN first. After we will talk about the improvement of WGAN to be IWGAN.
 
