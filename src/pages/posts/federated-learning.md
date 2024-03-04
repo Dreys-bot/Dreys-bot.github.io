@@ -7,28 +7,6 @@ imgSrc: '/assets/images/FederatedLearning/work_FL.png'
 imgAlt: 'Image post 4'
 ---
 
-
-
-
-# Abstract
-Federated learning is a machine learning approach that allows multiple devices or systems to collaboratively train a machine learning model without the need to share their raw data with each other. In traditional centralized machine learning approaches, data is collected and aggregated into a central location before a
-model is trained. However, in federated learning, the model is trained locally on each device or system using its
-own data, and the updated model parameters are then sent to a central server, where they are aggregated to
-create a new model that is then distributed back to all the devices.
-
-This approach offers several advantages, such as preserving data privacy by keeping data local and not sharing
-it across multiple systems. This can be especially important in industries such as healthcare, finance, or telecommunications where data privacy is critical. Federated learning can also be more efficient and scalable,
-as it reduces the need for data transfer and can enable large-scale collaborations without requiring the transfer
-of large amounts of data.
-
-There are also some challenges with federated learning, such as ensuring the quality and consistency of the
-data, dealing with imbalanced data distribution across devices, and handling communication and security
-issues. However, as the technology continues to develop, it has the potential to revolutionize machine learning
-by enabling large-scale collaborations and preserving data privacy.
-
-**Keywords**: Decentralization, Privacy, Collaborative Learning, Data Security, Model Aggregation
-
-
 # Introduction
 
 Federated learning is a machine learning technique that allows multiple parties to collaboratively
@@ -48,6 +26,18 @@ Federated learning has the potential to revolutionize the way machine learning m
 The applications of federated learning are wide-ranging and diverse. It can be used in personalized recommendation systems, natural language processing, image and video recognition, and predictive maintenance. However, there are also challenges associated with federated learning. Communication and computational costs can be significant, and there is a risk of biased or inaccurate models.
 
 Despite these challenges, ongoing research and advancements in federated learning are addressing these issues. With further progress, federated learning holds great promise in enabling organizations to leverage large amounts of data for machine learning while preserving privacy and security. This has the potential to transform various industries and unlock new possibilities for machine learning applications.
+
+# What is federated learning?
+
+Federated learning (often referred to as collaborative learning) is a decentralized approach to training machine learning models. It doesn’t require an exchange of data from client devices to global servers. Instead, the raw data on edge devices is used to train the model locally, increasing data privacy. The final model is formed in a shared manner by aggregating the local updates.
+
+Here’s why federated learning is important:
+
+**Privacy**: In contrast to traditional methods where data is sent to a central server for training, federated learning allows for training to occur locally on the edge device, preventing potential data breaches.
+
+**Data security**: Only the encrypted model updates are shared with the central server, assuring data security. Additionally, secure aggregation techniques such as Secure Aggregation Principle allow the decryption of only aggregated results.
+
+**Access to heterogeneous data**: Federated learning guarantees access to data spread across multiple devices, locations, and organizations. It makes it possible to train models on sensitive data, such as financial or healthcare data while maintaining security and privacy. And thanks to greater data diversity, models can be made more generalizable.
 
 # Architecture of federated learning
 
@@ -105,6 +95,9 @@ where the data feature spacce and label space pair o fthe two parties, i.e, $(X_
 
 
 # Process of training
+
+
+## Steps training
 The federated learning process typically follows the following steps:
 
 **Initialization**: The machine learning model is initialized on the central server and distributed to the client
@@ -163,5 +156,12 @@ There are several tools and frameworks available for implementing federated lear
 **NVIDIA Clara Federated Learning**: NVIDIA Clara Federated Learning is a commercial product developed by NVIDIA that provides a platform for building and training federated learning models. The platform supports multiple machine learning frameworks, including TensorFlow, PyTorch, and Keras.
 
 The choice of federated learning tools and frameworks will depend on factors such as the specific use case, the machine learning frameworks used, and the technical expertise of the development team.
+
+# Conclusion
+
+Through this article, we were able to see that federated learning opened the way to promising new possibilities in terms of privacy-friendly machine learning. By preserving sensitive data where it is collected, this decentralized approach enables collaboration without compromising security.
+We explained how federated learning generally works, with training local models and aggregating updates to form a powerful global model. Libraries like TensorFlow Federated are starting to democratize these techniques among developers.
+Although still at the research stage, the first use cases in personal assistants, health or finance suggest the potential of federated learning. Its challenges, such as data heterogeneity or bandwidth, remain to be resolved for large-scale deployment.
+With the exponential growth of personal data collected, this technique heralds profound changes in the world of AI. By combining the advantages of collaborative learning with absolute respect for privacy, federated learning could become essential. Its future progress will ensure the responsible development of artificial intelligence.
 
 

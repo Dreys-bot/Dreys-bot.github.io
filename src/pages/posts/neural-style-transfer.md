@@ -21,19 +21,19 @@ As we can see, the generated image is having the content of the ***Content image
 
 # What is neural style transfer?
 
-Neural Style Transfer is the technique of blending style from one image into another image keeping its content intact. The only change is the style configurations of the image to give an artistic touch to your image.
+**Neural Style Transfer(NST)** is the technique of blending style from one image into another image keeping its content intact. The only change is the style configurations of the image to give an artistic touch to your image.
 The content image describes the layout or the sketch and Style being the painting or the colors. Neural Style Transfer deals with two sets of images: **Content image and Style image**.
 This technique helps to recreate the content image in the style of the reference image. It uses Neural Networks to apply the artistic style from one image to another.
 Neural style transfer opens up endless possibilities in design, content generation, and the development of creative tools.
 
 
-# How does Style Transfer work?
+# How does NST work?
 
 The goal of Neural Style Transfer (NST) is to give the deep learning model the ability to differentiate between style representations and content images. NST uses a pre-trained convolutional neural network with additional loss functions to transfer the style from one image to another and synthesize a newly generated image with the desired features.
 Style transfer works by activating the neurons in a specific way, so that the output image and the content image match particularly at the content level, while the style image and the desired output image should match in terms of texture and capture the same style characteristics in the activation maps.
 These two objectives are combined in a single loss formula, where we can control how much we care about style reconstruction and content reconstruction.
 
-The **loss function** in neural style transfer plays a crucial role in guiding the model to generate an image that combines both the desired style and content. In style transfer, we typically have a content image (e.g., a photograph) and a style image (e.g., an artwork). The goal is to generate a new image that preserves the content of the content image while adopting the style of the style image.
+The **loss function** in neural style transfer plays a crucial role in guiding the model to generate an image that combines both the desired style and content. We have two functions loss (**content and style loss**) for both content and style representation. In style transfer, we typically have a content image (e.g., a photograph) and a style image (e.g., an artwork). The goal is to generate a new image that preserves the content of the content image while adopting the style of the style image.
 The loss function is used to quantify how well the generated image matches the style and content objectives. It measures the difference between the network activations for the original content image and the generated image, as well as the difference between the network activations for the original style image and the generated image.
 
 To balance style reconstruction and content reconstruction, the loss function combines these two differences using weights. These weights control the relative importance of style reconstruction compared to content reconstruction.
@@ -49,7 +49,7 @@ Here are the required inputs to the model for image style transfer:
 3. **An Input Image** (generated) – the final blend of content and style image
 
 
-## A basic structure
+## NST basic structure
 
 Training a style transfer model requires two networks: **a pre-trained feature extractor and a transfer network**.
 
@@ -61,57 +61,60 @@ During the style transfer process, the input image is transformed into represent
 Features extracted from upper layers of the model are more closely related to the image content. To obtain a representation of the style from a reference image, we analyze the correlation between the different filter responses in the model.
 
 
-### How Convolutional Neural Network capture features in VGG model?
+### How CNN capture features in VGG model?
 
 ![Style Neural Network results](/assets/images/neural-style-transfer/CNN_architecture.png)
 
 The VGG model is actually a type of convolutional neural network (CNN). VGG, which stands for **Visual Geometry Group**, is a very popular CNN architecture widely used in computer vision tasks, especially in the field of image classification. The VGG model is composed of several stacked convolutional layers, followed by fully connected layers. These convolutional layers are responsible for extracting visual features from images.
 Specifically, VGG's convolutional layers are designed to analyze visual patterns at different spatial scales. Each convolutional layer uses filters that are applied to images to detect specific patterns, such as edges, textures or shapes.
 
-The first convolutional layers of VGG (those at level 1 with 32 filters) capture low-level features, such as simple edges and textures, while the deeper convolutional layers (those at level 2 with 64 filters) capture features of higher level like complex shapes and overall structures.
+The figure shows an exemple of CNN layers of VGG model. The first convolutional layers of VGG (those at level 1 with 32 filters) capture low-level features, such as simple edges and textures, while the deeper convolutional layers (those at level 2 with 64 filters) capture features of higher level like complex shapes and overall structures.
 
 Thus the VGG model as a CNN is able to extract meaningful visual features from images. These features can then be used in different tasks, such as image classification or style transfer. In the context of style transfer, the model is used primarily as a feature extractor. VGG's convolutional layers are leveraged to capture content and style information from input images, allowing these two aspects to be separated and combined to generate a new image that combines the content of a reference image and style from another image.
 
 ### Content loss
 
-The **content loss** is a measure that allows establishing similarities between the content image and the image generated by the style transfer model. The underlying idea is that the upper layers of the model focus more on the features present in the image, i.e. on the overall content of the image.
-The content loss is calculated using the Euclidean distance between the upper-level intermediate feature representations of the input image (x) and the content image (p) at layer l.
+**Content loss is a metric that helps establish similarities between the content image and the image generated by the style transfer model. The idea behind it is that the higher layers of the model focus more on the features present in the image, i.e. the overall content of the image.
+The content loss is calculated using the Euclidean distance between the upper-level intermediate feature representations of the generated image (x) and the content image (p) at layer l.
 
 $L_{content}(\vec{p},\vec{x},l) = \frac{1}{2}\sum_{i,j}(F_{ij}^{l}(x) - P_{ij}^{l}(p))^2$
 
-In this equation, $F_{ij}^{l}(x)$ represents the feature representation of the input image x at layer l and $P_{ij}^{l}(p)$ represents the representation of characteristics of the content image p at layer l.
+In this equation, $F_{ij}^{l}(x)$ represents the feature representation of the generated image x at layer l and $P_{ij}^{l}(p)$ represents the representation of characteristics of the content image p at layer l.
 
 ### Style loss
 
 
 ![Style Neural Network results](/assets/images/neural-style-transfer/styleLoss.png)
 
-**Style loss** is conceptually different from content loss, but it is not possible to simply compare the intermediate features (textured patterns, contours, shapes) of the two images to obtain the style loss. That is why we introduce a new term called "Gram matrix".
+**Style loss** is conceptually different from content loss, but it is not possible to simply compare the intermediate features (textured patterns, contours, shapes) of the two images to obtain the style loss. That is why we introduce a new term called "Gram matrix". The Gram matrix has 2 specificities:
 
-In calculating content loss, the position of each pixel is taken into account in order to reproduce the content of the original image in the generated image. However, this is not the case for style loss because it relates to texture, colors, and other aspects. Thus, the Gram matrix is used to capture the stylistic features present in an image.
+**a) The Gram matrix does not take into account the position of the features**
 
-The initial layers of a neural network tend to capture features such as color and texture. One might think that by using a similar approach to content loss, focusing on the initial layers, we could obtain a "style loss". Unfortunately, this is not the case.
+The content loss calculation takes into account the position of each pixel in order to reproduce the content of the original image in the generated image. Conversely, the loss of style is more about textures, colors and other overall aspects independent of position. This is why the Gram matrix is ​​used to capture the stylistic features present in the image.
 
-The feature maps of the initial layers not only show which features are present, but they also record where these features are located in the image. This is where the Gram matrix comes into play. It allows for the removal of the spatial component and focuses solely on the types of features present. Removing the spatial component in the Gram matrix enables us to concentrate solely on the types of features present in the image, regardless of their specific spatial location.
+The first layers of a neural network encode features such as colors and textures. One might think that focusing on these layers as with the loss of content would result in a "loss of style". However, activation maps encode both the characteristics present but also their precise location.
 
-In the context of style loss, the goal is to capture global patterns and textures rather than focusing on the local details of the image. By eliminating the spatial component, we obtain a representation of the style features that emphasizes the relationships between different features without being influenced by their position in the image.
+This is where the Gram matrix comes in useful. By eliminating the spatial component, it focuses only on feature types without considering their position. Since the objective of style transfer is to reproduce global patterns and textures rather than local details, this representation without spatial location is better suited. It highlights correlations between features regardless of their position in the image.
 
-This enables us to compare style features between two images in a more abstract and general way, disregarding specific spatial variations. As a result, we can evaluate the stylistic similarity between images based on global patterns and textures rather than precise details of their positioning.
+**b) The Gram matrix take the correlations of two features**
 
-Furthermore, by removing the spatial component, the Gram matrix becomes a compact representation of style information, making style loss calculation easier and reducing memory and computation requirements.
+When a neural network analyzes an image, each neuron in a layer will be specialized in detecting a particular visual pattern such as lines, circles or squares. The strength of activation of a neuron will then indicate the presence of this pattern. However, style depends not only on the presence or absence of individual patterns, but also on how they interact with each other.
 
-Style loss is calculated by the distance between the gram matrices (or, in other terms, style representation) of the generated image and the style reference image.
+This is where the Gram matrix comes into play in a relevant way. Indeed, we have seen that it does not take into account the position of features, placing much more emphasis on textures, colors and other overall aspects of the style. Additionally, it makes it possible to quantify the correlation between the activations of different neurons, revealing the extent to which two patterns tend to appear together consistently across the entire image.
+
+This information on the relationships between visual patterns then makes it possible to define the style globally and independently of the precise position of each element. During style transfer, the objective is precisely to match these global patterns between the source and target image, rather than local details. By offering a representation focused on the relationships between characteristics, the Gram matrix thus facilitates comparison and guidance of the transfer process.
+
+These two caracteristics of Gram matrix enables to retrieve style of an image by calculate style loss. So the style loss is calculated by the distance between the gram matrices (or, in other terms, style representation) of the generated image and the style reference image.
 
 The contribution of each layer in the style information is calculated by the formula below:
-
-$E_l=\frac{1}{4 N_l^2 M_l^2} \sum_{i, j}\left(G_{i j}^l-A_{i j}^l\right)^2$
+$E_l=\frac{1}{4 N_l^2 M_l^2} \sum_{i, j}\left(G_{i j}^l-A_{i j}^l\right)^2$ where $G_{i j}^l$ is the Gram matrix of style image and $A_{i j}^l$ is Gram matrix of generated image
 
 Thus, the total style loss across each layer is expressed as:
 $L_{\text {style }}(a, x)=\sum_{l \in L} w_l E_l$
 
+## Model of NST
 
-### Model architecture of neural style transfer
-
+### Model architecture of NST
 The architecture of the NST can be designed in such a way that it can range from applying a single style in an image to allowing mix and match of multiple styles.
 Let’s have a look at the different possibilities.
 
@@ -127,6 +130,7 @@ $L_{total}(\vec{p}, \vec{\alpha},\vec{x}) = \alpha L_{content}(\vec{p}, \vec{x})
 You may have noticed Alpha and beta in the above equation.They are used for weighing Content and Style cost respectively.In general,they define the weightage of each cost in the Generated output image.
 
 Once the loss is calculated,then this loss can be minimized using **backpropagation** which in turn will optimize our **randomly generated image** into a **meaningful piece of art**.
+
 # Conclusion
 
 In conclusion, this article has explored the fundamental principle behind neural style transfer and its ability to successfully combine the content of one image with the style of another.
