@@ -99,13 +99,12 @@ Additionally, another test was carried out using 100 clients, and it was observe
 During training, I identified the key components of the federated learning model, which are virtual or logical entities responsible for different parts of the federated learning process:
 
 ````python
-Customer 0: distributor
 Client 1: client_work
 Client 2: aggregator
 Client 3: finalizer
 Client 4: distributor
 ````
-### Role and importance of these components 
+### Role and importance of components 
 
 The different components listed above have specific roles to carry out the entire process of federative learning.
 
@@ -135,7 +134,7 @@ Using these results, we can select the hyperparameter values ​​that lead to 
 
 ### Training on different hyperparameters
 
-#### Using the CNN model
+#### Using CNN model
 
 - Variation of learning rate
 ![architecture](/assets/images/FederatedLearning/CNN_lr_acc.png)
@@ -147,7 +146,7 @@ Using these results, we can select the hyperparameter values ​​that lead to 
 
 ![architecture](/assets/images/FederatedLearning/CNN_decay_acc.png)
 
-#### Using of EfficientNet model
+#### Using EfficientNet model
 
 - Variation of learning rate
 ![architecture](/assets/images/FederatedLearning/Eff_lr_acc.png)
@@ -159,13 +158,13 @@ Using these results, we can select the hyperparameter values ​​that lead to 
 
 ### Results analysis
 
-#### Using the CNN model
+#### Using CNN model
 
 An increasing trend in accuracy can be observed as training progresses, but at a certain level it decreases significantly. Indeed, the accuracy is higher when the learning rate has a low value, but it decreases considerably when the learning rate is higher.
 
 From the graph, we see that the smaller the decay, the higher the precision. The tests carried out demonstrated that optimal training is between 9% and 38% accuracy, which is considerably better than previously obtained results. However, it is possible that the accuracy remains static due to the low number of clients (5 clients). By increasing the number of customers, the results could be even better. It is also important to take into account that the CNN model may have difficulty adapting to a federated model.
 
-#### Using the EfficientNet model
+#### Using EfficientNet model
 
 The two tests revealed that the optimal values ​​of the learning rate are between 0.01 and 0.07, while those of the decay are between 0.001 and 1E-9, of the order of 1E-1. The maximum accuracy obtained is around 78%, which is significantly higher than the accuracy obtained with the CNN model.
 

@@ -100,7 +100,6 @@ Furthermore, by removing the spatial component, the Gram matrix becomes a compac
 Style loss is calculated by the distance between the gram matrices (or, in other terms, style representation) of the generated image and the style reference image.
 
 The contribution of each layer in the style information is calculated by the formula below:
-
 $E_l=\frac{1}{4 N_l^2 M_l^2} \sum_{i, j}\left(G_{i j}^l-A_{i j}^l\right)^2$
 
 Thus, the total style loss across each layer is expressed as:
