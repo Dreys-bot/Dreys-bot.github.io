@@ -54,9 +54,7 @@ export function useHeadsObserver() {
       rootMargin: '-20px 0px -20px 0px',
     });
 
-    const elements = document.querySelectorAll(
-      '.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6'
-    );
+    const elements = document.querySelectorAll('.prose h1, .prose h2');
     elements.forEach((elem) => observer.current.observe(elem));
     return () => observer.current?.disconnect();
   }, []);

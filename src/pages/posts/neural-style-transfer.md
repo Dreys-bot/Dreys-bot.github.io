@@ -14,119 +14,124 @@ Transferring the style from one image onto another can be considered a problem o
 
 For texture synthesis there exist a large range of powerful non-parametric algorithms that can synthesise photorealistic natural textures by resampling the pixels of a given source texture. Therefore, a fundamental prerequisite is to find image representations that independently model variations in the semantic image content and the style in which is presented.
 
-![Style Neural Network results](/assets/images/neural-style-transfer/styleNeuralNetResult.png)
 
-As we can see, the generated image is having the content of the ***Content image and style image***. This above result cannot be obtained by overlapping the image. So the main questions are:  ***how we make sure that the generated image has the content and style of the image?  how we capture the content and style of respective images?***
+![Style Neural Network results](/assets/images/neural-style-transfer/styleNeuralNetResult1.png)
 
-# What's CNN Capture?
+As we can see, the generated image is having the content of the ***Content image and style image***. This above result cannot be obtained by overlapping the image. So the main question are:  ***What is neural style transfer? how we make sure that the generated image has the content and style of the image?  how we capture the content and style of respective images?***
 
-![CNN Architecture](/assets/images/neural-style-transfer/CNN_architecture-new.png)
+# What is neural style transfer?
 
-Convolutional neural networks progressively learn to represent image features. At level 1, with 32 filters, the network can capture simple patterns such as straight or horizontal lines. While these elements may not seem relevant to the human eye, they are essential for the network's learning.
-
-At level 2, with 64 filters, the network starts to perceive more complex features, such as a dog's head or a car wheel. This increasing ability to extract simple and complex elements constitutes what is called "feature representation".
-
-It is important to note that CNNs do not aim to identify images, but rather learn to encode what they represent. This encoding capacity underlies their application to neural style transfer.
-
-Let us explore more deeply this fundamental concept of CNNs. Through their progressive approach, they build an ever richer representation of images as layers deepen, underpinning their power for tasks such as classification or style transfer.
+Neural Style Transfer is the technique of blending style from one image into another image keeping its content intact. The only change is the style configurations of the image to give an artistic touch to your image.
+The content image describes the layout or the sketch and Style being the painting or the colors. Neural Style Transfer deals with two sets of images: **Content image and Style image**.
+This technique helps to recreate the content image in the style of the reference image. It uses Neural Networks to apply the artistic style from one image to another.
+Neural style transfer opens up endless possibilities in design, content generation, and the development of creative tools.
 
 
-# How CNNs are used to capture content and style of images?
+# How does Style Transfer work?
 
-![CNN_VGG](/assets/images/neural-style-transfer/CNN_VGG.png)
+The goal of Neural Style Transfer (NST) is to give the deep learning model the ability to differentiate between style representations and content images. NST uses a pre-trained convolutional neural network with additional loss functions to transfer the style from one image to another and synthesize a newly generated image with the desired features.
+Style transfer works by activating the neurons in a specific way, so that the output image and the content image match particularly at the content level, while the style image and the desired output image should match in terms of texture and capture the same style characteristics in the activation maps.
+These two objectives are combined in a single loss formula, where we can control how much we care about style reconstruction and content reconstruction.
 
-The figure showed an image representations in a Convolutional Neural Network (CNN). A given input image is represented as a set of filtered images at each processing stage in the CNN. While the number of different filters increases along the processing hierarchy, the size of the filtered images is reduced by some downsampling mechanism (e.g. max-pooling) leading to a decrease in the total number of units per layer of the network.
+The **loss function** in neural style transfer plays a crucial role in guiding the model to generate an image that combines both the desired style and content. In style transfer, we typically have a content image (e.g., a photograph) and a style image (e.g., an artwork). The goal is to generate a new image that preserves the content of the content image while adopting the style of the style image.
+The loss function is used to quantify how well the generated image matches the style and content objectives. It measures the difference between the network activations for the original content image and the generated image, as well as the difference between the network activations for the original style image and the generated image.
 
-**Content Reconstructions**. We can visualise the information at different processing stages in the CNN by reconstructing the input image from only knowing the network’s responses in a particular layer. We reconstruct the input image from from layers ‘conv1 2’ (a), ‘conv2 2’ (b), ‘conv3 2’ (c), ‘conv4 2’ (d) and ‘conv5 2’ (e) of the original VGG-Network. We find that reconstruction from lower layers is almost perfect (a–c). In higher layers of the network, detailed pixel information is lost while the high-level content of the image is preserved (d,e).
+To balance style reconstruction and content reconstruction, the loss function combines these two differences using weights. These weights control the relative importance of style reconstruction compared to content reconstruction.
+Optimizing the loss function involves adjusting the pixel values in the generated image to minimize the difference between the network activations for the original content image and the generated image, while also minimizing the difference between the network activations for the original style image and the generated image.
 
-**Style Reconstructions**. On top of the original CNN activations we use a feature space that captures the texture information of an input image. The style representation computes correlations between the different features in different layers of the CNN. We reconstruct the style of the input image from a style representation built on different subsets of CNN layers ( ‘conv1 1’ (a), ‘conv1 1’ and ‘conv2 1’ (b), ‘conv1 1’, ‘conv2 1’ and ‘conv3 1’ (c), ‘conv1 1’, ‘conv2 1’, ‘conv3 1’ and ‘conv4 1’ (d), ‘conv1 1’, ‘conv2 1’, ‘conv3 1’, ‘conv4 1’ and ‘conv5 1’ (e). This creates images that match the style of a given image on an increasing scale while discarding information of the global arrangement of the scene
+By adjusting these pixel values, the model learns to reproduce the desired style characteristics in the corresponding areas of the generated image while preserving the content information from the original image.
+Thus, the loss function optimizes the model to generate an image that combines the desired style and content by minimizing the discrepancies between the network activations for the reference images and the generated image.
 
-## Content Loss
+Here are the required inputs to the model for image style transfer:
 
-Generally each layer in the network defines a non-linear filter bank whose complexity increases with the position of the layer in the network. Hence a given input image $\vec{x}$ is encoded in each layer of the Convolutional Neural Network by the filter responses to that image. A layer with $N_l$ distinct filters has $N_l$ feature maps each of size Ml , where $M_l$ is the height times the width of the feature map. So the responses in a layer $l$ can be stored in a matrix $F_l$ where $F^l_{ij}$ is the activation of the $i^{th}$ filter at position $j$ in layer $l$.
-
-To visualise the image information that is encoded at different layers of the hierarchy one can perform gradient descent on a white noise image to find another image that matches the feature responses of the original image.
-Let  $\vec{p}$ and  $\vec{x}$ be the original image and the image that is generated, and $P_l$ and $F_l$ their respective feature representation in layer $l$. We then define the squared-error loss between the two feature representations.
-
-
-$L_{content}(\vec{p},\vec{x},l) = \frac{1}{2}\sum_{i,j}(F_{ij}^{l} - P_{ij}^{l})^2$
-
-The derivative of this loss with respect to the activations in layer $l$ equals
-
-$\frac{\partial \mathcal{L}_{\text {content }}}{\partial F_{i j}^l}= \begin{cases}\left(F^l-P^l\right)_{i j} & \text { if } F_{i j}^l>0 \\ 0 & \text { if } F_{i j}^l<0,\end{cases}$
-
-from which the gradient with respect to the image  $\vec{x}$ can be computed using standard error back-propagation  
-
-Thus we can change the initially random image  $\vec{x}$ until it generates the same response in a certain layer of the Convolutional Neural Network as the original image  $\vec{p}$. When Convolutional Neural Networks are trained on object recognition, they develop a representation of the image that makes object information increasingly explicit along the processing hierarchy. Therefore, along the processing hierarchy of the network, the input image is transformed into representations that are increasingly sensitive to the actual content of the image, but become relatively invariant to its precise appearance. Thus, higher layers in the network capture the high-level content in terms of objects and their arrangement in the input image but do not constrain the exact pixel values of the reconstruction very much. In contrast, reconstructions from the lower layers simply reproduce the exact pixel values of the original image. We therefore refer to the feature responses in higher layers of the network as the ***content representation***
-
-## Style Loss
-
-To obtain a representation of the style of an input image, we use a feature space designed to capture texture information . This feature space can be built on top of the filter responses in any layer of the network. It consists of the correlations between the different filter responses, where the expectation is taken over the spatial extent of the feature maps. These feature correlations are given by the Gram matrix.
-
-By including the feature correlations of multiple layers, we obtain a stationary, multi-scale representation of the input image, which captures its texture information but not the global arrangement. Again, we can visualise the information captured by these style feature spaces built on different layers of the network by constructing an image that matches the style representation of a given input image (Fig 1, style reconstructions). This is done by using gradient descent from a white noise image to minimise the mean-squared distance between the entries of the Gram matrices from the original image and the Gram matrices of the image to be generated. 
-
-Before calculating style loss, let’s see what is the meaning of “**style of a image**” or how we capture style of an image.
-
-### How we capture style of an image ?
-
-![Different channels or Feature maps in layer l](https://miro.medium.com/v2/resize:fit:264/0*dyVKNRn36XORjr9v.png)
+1. **A Content Image** –an image to which we want to transfer style to
+2. **A Style Image** – the style we want to transfer to the content image
+3. **An Input Image** (generated) – the final blend of content and style image
 
 
+## A basic structure
 
-This image shows different channels or feature maps or filters at a particular chosen layer **l**. Now, in order to capture the style of an image we would calculate how **correlated** these filters are to each other meaning how similar are these feature maps. **But what is meant by correlation?**
+Training a style transfer model requires two networks: **a pre-trained feature extractor and a transfer network**.
 
-Let’s understand it with the help of an example:
+In the case of Neural Style Transfer (NST), we use a model pre-trained on ImageNet, such as VGG in TensorFlow. However, the VGG model cannot understand images directly. It is necessary to convert the images into raw pixels and feed them to the model to transform them into a set of features, which is usually done by convolutional neural networks (CNN) which we will see in the next section.
 
-Let the first two channel in the above image be Red and Yellow. Suppose, the red channel captures some simple feature (say, vertical lines) and if these two channels were correlated then whenever in the image there is a vertical lines that is detected by Red channel then there will be a Yellow-ish effect of the second channel.
+Thus, the VGG model acts as a complex feature extractor between the input layer, where the image is fed, and the output layer, which produces the final result. To achieve style transfer, we focus on the middle layers of the model that capture essential information about the content and style of the input images.
+During the style transfer process, the input image is transformed into representations that emphasize image content rather than specific pixel values.
 
-Now,let’s look at how to calculate these correlations (mathematically).
-
-In-order to calculate a correlation between different filters or channels, we calculate the dot-product between the vectors of the activations of the two filters.The matrix thus obtained is called **Gram Matrix**.
-
-**But how do we know whether they are correlated or not ?**
-
-If the dot-product across the activation of two filters is large then two channels are said to be correlated and if it is small then the images are un-correlated. **Putting it mathematically :**
-
-**Gram Matrix of Style Image(S)**:
-
-Here k and k’ represents different filters or channels of the layer L. Let’s call this Gkk’[l][S].
-
-$J_{style}=\sum_{l}^H\sum_{j}^W(A_{ijk}^{[l][S]} - A_{ijk'}^{[l][S]})$
+Features extracted from upper layers of the model are more closely related to the image content. To obtain a representation of the style from a reference image, we analyze the correlation between the different filter responses in the model.
 
 
-**Gram Matrix for Generated Image(G)**:
+### How Convolutional Neural Network capture features in VGG model?
 
-Here k and k’ represents different filters or channels of the layer L.Let’s call this Gkk’[l][G].
+![Style Neural Network results](/assets/images/neural-style-transfer/CNN_architecture.png)
 
-$J_{style.generated}=\sum_{l}^H\sum_{j}^W(A_{ijk}^{[l][G]} - A_{ijk'}^{[l][G]})$
+The VGG model is actually a type of convolutional neural network (CNN). VGG, which stands for **Visual Geometry Group**, is a very popular CNN architecture widely used in computer vision tasks, especially in the field of image classification. The VGG model is composed of several stacked convolutional layers, followed by fully connected layers. These convolutional layers are responsible for extracting visual features from images.
+Specifically, VGG's convolutional layers are designed to analyze visual patterns at different spatial scales. Each convolutional layer uses filters that are applied to images to detect specific patterns, such as edges, textures or shapes.
 
-Now,we are in the position to define Style loss:
+The first convolutional layers of VGG (those at level 1 with 32 filters) capture low-level features, such as simple edges and textures, while the deeper convolutional layers (those at level 2 with 64 filters) capture features of higher level like complex shapes and overall structures.
 
-Cost function between Style and Generated Image is the square of difference between the Gram Matrix of the style Image with the Gram Matrix of generated Image.
+Thus the VGG model as a CNN is able to extract meaningful visual features from images. These features can then be used in different tasks, such as image classification or style transfer. In the context of style transfer, the model is used primarily as a feature extractor. VGG's convolutional layers are leveraged to capture content and style information from input images, allowing these two aspects to be separated and combined to generate a new image that combines the content of a reference image and style from another image.
 
-$J_{S,G} = \frac{1}{2H^lW^lC^l}\sum_{k}\sum_{k'}(G_{kk'}^{[l][S]} - G_{kk'}^{[l][G]})$
+### Content loss
 
-Now,Let’s define the total loss for Neural Style Transfer.
+The **content loss** is a measure that allows establishing similarities between the content image and the image generated by the style transfer model. The underlying idea is that the upper layers of the model focus more on the features present in the image, i.e. on the overall content of the image.
+The content loss is calculated using the Euclidean distance between the upper-level intermediate feature representations of the input image (x) and the content image (p) at layer l.
 
-## Total Loss Function
+$L_{content}(\vec{p},\vec{x},l) = \frac{1}{2}\sum_{i,j}(F_{ij}^{l}(x) - P_{ij}^{l}(p))^2$
 
-The total loss function is the sum of the cost of the content and the style image.Mathematically,it can be expressed as :
+In this equation, $F_{ij}^{l}(x)$ represents the feature representation of the input image x at layer l and $P_{ij}^{l}(p)$ represents the representation of characteristics of the content image p at layer l.
+
+### Style loss
+
+
+![Style Neural Network results](/assets/images/neural-style-transfer/styleLoss.png)
+
+**Style loss** is conceptually different from content loss, but it is not possible to simply compare the intermediate features (textured patterns, contours, shapes) of the two images to obtain the style loss. That is why we introduce a new term called "Gram matrix".
+
+In calculating content loss, the position of each pixel is taken into account in order to reproduce the content of the original image in the generated image. However, this is not the case for style loss because it relates to texture, colors, and other aspects. Thus, the Gram matrix is used to capture the stylistic features present in an image.
+
+The initial layers of a neural network tend to capture features such as color and texture. One might think that by using a similar approach to content loss, focusing on the initial layers, we could obtain a "style loss". Unfortunately, this is not the case.
+
+The feature maps of the initial layers not only show which features are present, but they also record where these features are located in the image. This is where the Gram matrix comes into play. It allows for the removal of the spatial component and focuses solely on the types of features present. Removing the spatial component in the Gram matrix enables us to concentrate solely on the types of features present in the image, regardless of their specific spatial location.
+
+In the context of style loss, the goal is to capture global patterns and textures rather than focusing on the local details of the image. By eliminating the spatial component, we obtain a representation of the style features that emphasizes the relationships between different features without being influenced by their position in the image.
+
+This enables us to compare style features between two images in a more abstract and general way, disregarding specific spatial variations. As a result, we can evaluate the stylistic similarity between images based on global patterns and textures rather than precise details of their positioning.
+
+Furthermore, by removing the spatial component, the Gram matrix becomes a compact representation of style information, making style loss calculation easier and reducing memory and computation requirements.
+
+Style loss is calculated by the distance between the gram matrices (or, in other terms, style representation) of the generated image and the style reference image.
+
+The contribution of each layer in the style information is calculated by the formula below:
+
+$E_l=\frac{1}{4 N_l^2 M_l^2} \sum_{i, j}\left(G_{i j}^l-A_{i j}^l\right)^2$
+
+Thus, the total style loss across each layer is expressed as:
+$L_{\text {style }}(a, x)=\sum_{l \in L} w_l E_l$
+
+
+### Model architecture of neural style transfer
+
+The architecture of the NST can be designed in such a way that it can range from applying a single style in an image to allowing mix and match of multiple styles.
+Let’s have a look at the different possibilities.
+
+
+![Style Neural Network results](/assets/images/neural-style-transfer/neuralArchitecture.png)
+
+### Total Loss
+
+The total loss function is the sum of the cost of the content and the style image. Mathematically,it can be expressed as :
 
 $L_{total}(\vec{p}, \vec{\alpha},\vec{x}) = \alpha L_{content}(\vec{p}, \vec{x}) + \beta L_{style}(\vec{\alpha}, \vec{x})$
 
 You may have noticed Alpha and beta in the above equation.They are used for weighing Content and Style cost respectively.In general,they define the weightage of each cost in the Generated output image.
 
 Once the loss is calculated,then this loss can be minimized using **backpropagation** which in turn will optimize our **randomly generated image** into a **meaningful piece of art**.
-
-This sums up the working of Neural Style Transfer.
-
-
 # Conclusion
 
 In conclusion, this article has explored the fundamental principle behind neural style transfer and its ability to successfully combine the content of one image with the style of another.
 We began by understanding how convolutional neural networks progressively learn to represent image features through the extraction of simple to complex patterns. This encoding capability is crucial for separating content and style in an unsupervised manner.
 Precise definitions of content and style losses were provided, mathematically modeling the desired similarity between the generated image and the reference images. The calculation of the Gram matrix emerged as central to quantifying correlations between filters indicative of style.
 Optimizing the generated image through backpropagation of the overall cost function gradient then allows synthesizing a new image realistically fusing the targeted characteristics.
-
 While still improvable, this unsupervised approach opens promising avenues for numerous artistic and industrial applications. Future work could focus on enhancing its capacities.
 Through this article, we aimed to provide a clear and detailed explanation of the internal workings behind neural style transfer, foundational to many deep learning innovations. Continued research in this area holds potential for generating increasingly convincing and customized artistic blends.
