@@ -1,4 +1,5 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import type { IFrontmatter } from 'astro-boilerplate-components';
 
 import { BlogPost } from '@/partials/BlogPost';
@@ -8,14 +9,15 @@ import { AppConfig } from '@/utils/AppConfig';
 
 export interface Props {
   content: IFrontmatter;
+  headings: MarkdownHeading[];
 }
 
-const { content } = Astro.props as Props;
+const { content, headings } = Astro.props as Props;
 const title = `${content.title} - ${AppConfig.site_name}`;
 ---
 
 <Base head={{ title, description: content.description }}>
-  <BlogPost frontmatter={content}>
+  <BlogPost client:load frontmatter={content} headings={headings}>
     <slot></slot>
   </BlogPost>
 

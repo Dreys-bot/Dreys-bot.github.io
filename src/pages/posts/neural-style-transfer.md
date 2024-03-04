@@ -9,16 +9,18 @@ imgAlt: "Vladimir Putin's photo modified by artificial intelligence with an aqua
 
 # Introduction
 To generally separate content from style in natural images is still an extremely difficult problem. However, the recent advance of Deep Convolutional Neural Networks has produced powerful computer vision systems that learn to extract high-level semantic information from natural images.
+
 Transferring the style from one image onto another can be considered a problem of texture transfer. In texture transfer the goal is to synthesise a texture from a source image while constraining the texture synthesis in order to preserve the semantic content of a target image.
+
 For texture synthesis there exist a large range of powerful non-parametric algorithms that can synthesise photorealistic natural textures by resampling the pixels of a given source texture. Therefore, a fundamental prerequisite is to find image representations that independently model variations in the semantic image content and the style in which is presented.
 
 ![Style Neural Network results](/assets/images/neural-style-transfer/styleNeuralNetResult.png)
 
 As we can see, the generated image is having the content of the ***Content image and style image***. This above result cannot be obtained by overlapping the image. So the main questions are:  ***how we make sure that the generated image has the content and style of the image?  how we capture the content and style of respective images?***
 
-# What Convolutional Neural Network Capture?
+# What's CNN Capture?
 
-![CNN Architecture](/assets/images/neural-style-transfer/CNN_architecture.png)
+![CNN Architecture](/assets/images/neural-style-transfer/CNN_architecture-new.png)
 
 Convolutional neural networks progressively learn to represent image features. At level 1, with 32 filters, the network can capture simple patterns such as straight or horizontal lines. While these elements may not seem relevant to the human eye, they are essential for the network's learning.
 
@@ -29,7 +31,7 @@ It is important to note that CNNs do not aim to identify images, but rather lear
 Let us explore more deeply this fundamental concept of CNNs. Through their progressive approach, they build an ever richer representation of images as layers deepen, underpinning their power for tasks such as classification or style transfer.
 
 
-# How Convolutional Neural Networks are used to capture content and style of images?
+# How CNNs are used to capture content and style of images?
 
 ![CNN_VGG](/assets/images/neural-style-transfer/CNN_VGG.png)
 
@@ -106,7 +108,7 @@ $J_{S,G} = \frac{1}{2H^lW^lC^l}\sum_{k}\sum_{k'}(G_{kk'}^{[l][S]} - G_{kk'}^{[l]
 
 Now,Let’s define the total loss for Neural Style Transfer.
 
-## Total Loss Function :
+## Total Loss Function
 
 The total loss function is the sum of the cost of the content and the style image.Mathematically,it can be expressed as :
 
