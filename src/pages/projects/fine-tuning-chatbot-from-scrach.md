@@ -15,9 +15,9 @@ We will see how to generate text with models based on the Transformers architect
 
 First, we will present a theoretical introduction to text generation models, followed by a presentation to HuggingFace Transformers, the Python library that we will use in the rest of the post. Then, we will focus on the GPT-2 model, and how to use the interface available in HuggingFace Transformers, both to generate text with the pre-trained models, as well as to re-train them with their own text. Finally, we will see the ethical risks associated with the use of these models without caution,since they have been trained with text from the internet and have learned the same biases present on the web.
 
-## Text generation models
+# Text generation models
 
-### 1.1 Introduction to text genration models
+## 1.1 Introduction to text genration models
 
 Text generation models began to be developed decades ago, long before the deep learning boom. The purpose of his type of models is to be able to predict a word or sequence of words given a text. The bottom diagram is a implified representation of what these models do, using a text as input, the model is capable of generating a robability distribution over the dictionary of words it knows, and choose based on it.
 
@@ -31,7 +31,7 @@ In this post we are going to focus on how to generate text with GPT-2, a text ge
 
 ![[Pasted image 20231026110525.png]]
 
-### 1.2 Setup
+## 1.2 Setup
 
 First, let’s import all the packages we are going to use. Specifically, the versions of these packages are:
 
@@ -41,9 +41,9 @@ First, let’s import all the packages we are going to use. Specifically, the ve
 - colorama==0.4.4
 - torch==1.9.1
 
-## 3. Text generation with GPT-2
+# 3. Text generation with GPT-2
 
-### 3.1 Model and tokenizer loading
+## 3.1 Model and tokenizer loading
 
 The first step will be to load both the model and the tokenizer the model will use. We both do it through the interface of the GPT2 classes that exist in Huggingface Transformers `GPT2LMHeadModel` and`GPT2Tokenizer` respectively. In both cases, you must specify the version of the model you want to use, and the 4 dimensions of the model published by OpenAI are available:
 
@@ -67,7 +67,7 @@ The tokenizer has three functions:
 Through the tokenizer instance we can explore the vocabulary (`get_vocab`) and see its size, as well as explore and play tokenizing (`tokenize`) different texts to understand how it works.
 
 
-### 3.2 Decoding methods and parameters
+## 3.2 Decoding methods and parameters
 
 With all of the above we can already generate text. We have a tokenized text and a pre-trained model, we can call the `generate` function passing the tokenized text as input.
 
@@ -94,7 +94,7 @@ for i, beam in enumerate(generated_text_samples):
 
 However, it is important to mention the relevance of decoding methods (ways of choosing the next word or words given a phrase), since the quality of the obtained text will vary significantly. They can be configured based on the parameters that are passed to the generation function.
 
-## 4. Fine Tunning : How to generate fake news
+# 4. Fine Tunning : How to generate fake news
 
 GPT-2 has been trained with generic text downloaded from the internet (Wikipedia, Reddit, etc.), so if we want the text structure to be in a certain way or the content to focus on one theme, it is not enough to just use the pre-trained model available in Transformers. To do this, a fine-tuning of the model can be done, which consists of adding some layers to the architecture and retraining the model with a dataset containing the desired theme or text structure.
 
@@ -113,7 +113,7 @@ We are going to  generate text in news format (fake news): headline + article. F
 
 We will use the following dataset with headlines and news articles from 2016: [https://www.kaggle.com/snapcrack/all-the-news?select=articles1.csv](https://www.kaggle.com/snapcrack/all-the-news?select=articles1.csv). Most of the news are about Trump, Obama and Hillary Clinton.
 
-### 4.1 Fine-tunning to generate headlines
+## 4.1 Fine-tunning to generate headlines
 
 **Loading the tokenizer and model with special tokens**
 
@@ -149,7 +149,7 @@ base_model.resize_token_embeddings(len(base_tokenizer))
 
 ```
 
-#### Data loading and processing
+### Data loading and processing
 
 The data processing in this case consists of three steps:
 
@@ -165,7 +165,7 @@ It is vitally important to clean and process the texts before training the model
 - We discard duplicate headlines
 - We keep the first 100 words of the articles
 
-#### Training
+### Training
 
 We train in the same way as we did with the articles. In this case, the training was stopped without having finished, and continued from the last saved checkpoint.
 

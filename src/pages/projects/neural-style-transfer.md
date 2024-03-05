@@ -10,7 +10,7 @@ imgAlt: 'Paint icon'
 tags: ['python', 'tensorflow', 'tensorflow-hub', 'matplotlib', 'numpy']
 ---
 
-### 🎨🖌 Creating Art with the help of Artificial Intelligence !
+# 🎨🖌 Creating Art with the help of Artificial Intelligence !
 
 ![[https://github.com/Dreys-bot/Neural-Style-Transfert/blob/main/ezgif.com-video-to-gif.gif]]
 
@@ -21,11 +21,11 @@ This repository contains an implementation of the Neural Style Transfer techniqu
 <br> <!-- line break -->
 
 
-## 🎯 Objective 
+# 🎯 Objective 
 The main goal of this project is to explore Neural-style-transfer through implementation. We'll Implement a NST model using Tensorflow and keras, and at the end of the project we'll deploy it as a web app so that anyone can create stunning digital art which they could even sell as NFT's.
 
 
-## 📝 Summary of Neural Style Transfer
+# 📝 Summary of Neural Style Transfer
 
 Style transfer is a computer vision technique that takes two images — a "content image" and "style image" — and blends them together so that the resulting output image retains the core elements of the content image, but appears to be “painted” in the style of the style reference image. Training a style transfer model requires two networks,which follow a encoder-decoder architecture : 
 - A pre-trained feature extractor 
@@ -48,7 +48,7 @@ Having the above intuition, let’s define our Content Loss and Style loss to ra
 <br> <!-- line break -->
 
 
-### Content Loss
+# Content Loss
 
 Calculating content loss means how similar is the randomly generated noisy image(G) to the content image(C).In order to calculate content loss:
 
@@ -56,7 +56,7 @@ Assume that we choose a hidden layer (L) in a pre-trained network(VGG network) t
 
 ![[https://github.com/Dreys-bot/Neural-Style-Transfert/blob/main/0_PJK8-P3tBWrUV1q1.png]]
 
-### Style Loss
+# Style Loss
 
 Before calculating style loss, let’s see what is the meaning of “**style of a image**” or how we capture style of an image.
 
@@ -106,7 +106,7 @@ The total loss function is the sum of the cost of the content and the style imag
 ![[https://github.com/Dreys-bot/Neural-Style-Transfert/blob/main/0_JPXny-rYTIeZRSb4.png]]
 
 
-## To run locally
+# To run locally
 
 1. Download the pre-trained TF model.
 
@@ -139,7 +139,7 @@ plt.imshow(img)
 plt.show()
 ```
 
-## 🔥 Web Interface & API
+# 🔥 Web Interface & API
 
 In order to make it easy for anyone to interact with the model,we created a clean web interface using flask.
 
