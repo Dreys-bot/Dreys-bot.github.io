@@ -58,7 +58,7 @@ During the style transfer process, the input image is transformed into represent
 Features extracted from upper layers of the model are more closely related to the image content. To obtain a representation of the style from a reference image, we analyze the correlation between the different filter responses in the model.
 
 ![Style Neural Network results](/assets/images/neural-style-transfer/neuralArchitecture.png)
-*****Neural Style Transfer architecture diagram according to V7Labs*****
+
 
 ### How CNN capture features in VGG model?
 
