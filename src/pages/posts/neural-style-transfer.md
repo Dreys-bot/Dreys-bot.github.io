@@ -58,6 +58,7 @@ During the style transfer process, the input image is transformed into represent
 Features extracted from upper layers of the model are more closely related to the image content. To obtain a representation of the style from a reference image, we analyze the correlation between the different filter responses in the model.
 
 ![Style Neural Network results](/assets/images/neural-style-transfer/neuralArchitecture.png)
+*****Neural Style Transfer architecture diagram according to V7Labs*****
 
 ### How CNN capture features in VGG model?
 
@@ -85,7 +86,7 @@ In this equation, $F_{ij}^{l}(x)$ represents the feature representation of the g
 
 ![Style Neural Network results](/assets/images/neural-style-transfer/styleLoss.png)
 
-**Style loss** is a bit more complicated that content loss because style is hard to define exactly. It is not possible to simply compare the features like patterns, contours, shapes of the two images to obtain the style loss. That is why we use another tool called: **Gram matrix**. The Gram matrix has 2 specificities:
+**Style loss** is a bit more complicated that content loss because style is hard to define exactly. It is not possible to simply compare the features like patterns, contours, shapes of the two images to obtain the style loss. We need to find the **correlation** between features. That is why we use another tool called: **Gram matrix**. The Gram matrix then captures the correlations between style characteristics. It measures how visual patterns co-occur in the image (colors, textures). More precisely, each case of the Gram matrix corresponds to the scalar product between two column vectors of the feature matrix. This allows you to obtain a signature of the image style in the form of a matrix.The Gram matrix has 2 specificities:
 
 - The Gram matrix does not take into account the position of the features
 
