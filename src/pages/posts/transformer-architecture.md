@@ -9,41 +9,62 @@ imgAlt: 'Image post'
 
 # Introduction 
 
-Natural language processing (NLP) is a rapidly growing field of artificial intelligence. Being able to understand, generate and translate text effectively are challenges that open the way to many technological advances.
-For a long time, recurrent neural networks based on LSTM (long short-term memory) were the dominant approach for sequential modeling of language data. LSTMs are better than traditional RNNs at retaining information over long sequences thanks to their gate mechanism.
+Natural Language Processing (NLP) is a rapidly growing field of artificial intelligence. Being able to understand, generate and translate text effectively are challenges that open the way to many technological advances.
+For a long time, Long Short-Term Memory5 (LSTM) based on Recurrent Neural Networks (RNN) were the dominant approach for sequential modeling of language data. LSTMs are better than traditional RNNs at retaining information over long sequences thanks to their gate mechanism.
 However, their ability to effectively capture very long-range contextual dependencies remains limited. It is in this context that the Transformer model appeared in 2017, proposed by a team of Google researchers.
 Rather than using a recurrent structure, Transformers incorporate an attention mechanism allowing them to learn the contextual dependencies between elements in a sequence. This revolutionary architecture very quickly surpassed RNNs on many NLP tasks such as machine translation.
 Since then, Transformers have become omnipresent in the field. Giant models such as BERT or GPT-3 have enabled major advances in understanding and generating text. However, many questions remain open about their complex inner workings.
 In this article, we present in detail the Transformer architecture as well as its current applications.
 
-# Definitions
+# Sequentials models of NLP
 
 ## What is RNN? 
 **Recurrent neural networks (RNN)** are models specialized in the analysis of sequential data such as text or speech.
-Unlike traditional networks which only see information isolated from each other, RNNs are able to “memorize” what they have already seen thanks to their internal memory.
-This memory, called hidden state, keeps track of the previous context at each stage of processing a sequence. So when the RNN looks at a new element, it also remembers the previous ones thanks to its hidden state.
+Unlike traditional networks which only see information isolated from each other, RNNs are able to **memorize** what they have already seen thanks to their internal memory.
+This memory, called **hidden state**, keeps track of the previous context at each stage of processing a sequence. So when the RNN looks at a new element, it also remembers the previous ones thanks to its hidden state.
 This is what allows RNNs to efficiently analyze data like sentences or music, where the order of words/sounds is important. Rather than seeing everything separately, the RNN understands how each part fits together.
-Thanks to their dynamic internal memory, RNNs are today widely used in language and speech processing by machines. It is one of the key tools to teach them to communicate better with us. The figure below represent a global archtecture of RNN Where x, h, o are the input sequence, hidden state and output sequence respectively. U, V and W are the training weights.
+Thanks to their dynamic internal memory, RNNs are today widely used in language and speech processing by machines. It is one of the key tools to teach them to communicate better with us. The figure below represent a global architecture of RNN where x, h, o are the input sequence, hidden state and output sequence respectively. U, V and W are the training weights.
 
 ![](/assets/images/transformer-architecture/RNN.png)
 
 
-However, they face a limitation called the "vanishing gradient problem". Indeed, when an RNN processes the elements of a sequence one after the other, the influence of the first elements analyzed tends to fade over time. It's as if the network has more and more difficulty remembering the beginning of the sequence as it goes on. Then, **LSTM** model come to resolve it.
+However, they face a limitation called the **vanishing gradient problem**. Indeed, when an RNN processes the elements of a sequence one after the other, the influence of the first elements analyzed tends to fade over time. It's as if the network has more and more difficulty remembering the beginning of the sequence as it goes on. Then, **LSTM** model come to resolve it.
 
 ## What is LSTM ?
-LSTM is a specific type of RNN architecture that addresses the vanishing gradient problem, which occurs when training deep neural networks. LSTMs leverage memory cells and gates to selectively store and retrieve information over long sequences, making them effective at capturing long-term dependencies. The figure blow shows the global architecture of LSTM model:
+LSTM is a specific type of RNN architecture that addresses the vanishing gradient problem, which occurs when training deep neural networks. LSTMs leverage memory cells and gates to selectively store and retrieve information over long sequences, making them effective at capturing long-term dependencies. The figure blow shows a memory cell architecture of LSTM model:
 
 ![](/assets/images/transformer-architecture/LSTM.png)
 
 LSTMs have a **memory cell** allowing them to better manage long-term dependencies. This memory cell is made up of three **gates**:
 
-- The **input gate** determines the information from the $x_t$ input that must be added to the memory cell.
-- The **forget gate** decides which old information contained in cell ct-1 should be erased.
-- The **output gate** selects the ct information to extract for the calculation of the hidden state ht.
+- The **input gate** 
+- The **forget gate** 
+- The **output gate** 
 
-At each time step, these gates control what is updated or not in the memory cell $c_t$.
-Unlike classic RNNs which only have a hidden state $h_t$, LSTMs have a second state ct representing the long-term memory in the memory cell. Thanks to this architecture and the regulation provided by the gates, LSTMs are better than RNNs at capturing contextual dependencies over long sequences, avoiding the vanishing gradient problem. This is what makes them perform better on language processing tasks.
+These gates regulate the flow of information inside the memory cell, thus making it possible to control what information is remembered and what information is forgotten. This gives LSTM the ability to remember important information over long sequences and ignore less relevant material. $h_t$ is the usual hidden state of RNNs but in LSTM networks we add a second state called $c_t$. Here, $h_t$ represents the neuron's short memory (previous word) and $c_t$ represents the long-term memory (all the previous words history).
 
+### Forget gate
+![](/assets/images/transformer-architecture/porte-doubli-LSTM.gif)
+This gate decides what information must be kept or discarded: the information from the previous hidden state is concatenated to the input data (for example the word "des" vectorized) then the sigmoid function is applied to it in order to normalize the values between 0 and 1. If the output of the sigmoid is close to 0, this means that we must forget the information and if it is close to 1 then we must memorize it for the rest. 
+
+### Input gate
+![](/assets/images/transformer-architecture/inputGate.gif)
+The role of the entry gate is to extract information from the current data (the word “des” for example): we will apply in parallel a sigmoid to the two concatenated data (see previous gate) and a tanh.
+
+- Sigmoid (on the blue circle) will return a vector for which a coordinate close to 0 means that the coordinate in the equivalent position in the concatenated vector is not important. Conversely, a coordinate close to 1 will be deemed “important” (i.e. useful for the prediction that the LSTM seeks to make).
+- Tanh (on the red circle) will simply normalize the values ​​(overwrite them) between -1 and 1 to avoid problems with overloading the computer with calculations.
+- The product of the two will therefore allow only the important information to be kept, the others being almost replaced by 0.
+
+### Cell state
+![](/assets/images/transformer-architecture/cellState.gif)
+We talk about the state of the cell before approaching the last gate (output gate), because the value calculated here is used in it.
+The state of the cell is calculated quite simply from the oblivion gate and the entry gate: first we multiply the exit from oblivion coordinate by coordinate with the old state of the cell. This makes it possible to forget certain information from the previous state which is not used for the new prediction to be made. Then, we add everything (coordinate to coordinate) with the output of the input gate, which allows us to record in the state of the cell what the LSTM (among the inputs and the previous hidden state) has deemed relevant.
+
+### Output gate
+![](/assets/images/transformer-architecture/outputGate.gif)
+Last step: the output gate must decide what the next hidden state will be, which contains information about previous inputs to the network and is used for predictions.
+To do this, the new state of the cell calculated just before is normalized between -1 and 1 using tanh. The concatenated vector of the current input with the previous hidden state passes, for its part, into a sigmoid function whose goal is to decide which information to keep (close to 0 means that we forget, and close to 1 that we will keep this coordinate of the state of the cell).
+All this may seem like magic in the sense that it seems like the network has to guess what to retain in a vector on the fly, but remember that a weight matrix is ​​applied as input. It is this matrix which will, concretely, store the fact that such information is important or not based on the thousands of examples that the network will have seen!
 
 ## What is a Transformer?
 The Transformer is a neural network architecture proposed in the seminal paper “Attention Is All You Need” by Vaswani et al. Unlike RNNs, Transformers do not rely on recurrence but instead operate on self-attention.
