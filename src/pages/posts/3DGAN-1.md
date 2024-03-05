@@ -9,13 +9,15 @@ imgAlt: 'Image post 2'
 
 # Introduction
 Generative adversarial networks, or GANs, represent a cutting-edge approach to generative modeling in deep learning, often leveraging architectures such as convolutional neural networks. The goal of generative modeling is to autonomously identify patterns in the input data, allowing the model to produce new examples that realistically resemble the original dataset.
-GANs address this challenge through a unique setup, treating it as a supervised learning problem involving two key elements: the generator, which learns to produce new examples, and the discriminator, responsible for distinguishing between real and generated. Through adversarial training, these models engage in competitive interaction until the generator becomes adept at creating realistic samples, fooling the discriminator about half the time.
+GANs address this challenge through a unique setup, treating it as a supervised learning problem involving two key elements: the generator, which learns to produce new examples, and the discriminator, responsible for distinguishing between real and generated. 
+
+Through adversarial training, these models engage in competitive interaction until the generator becomes adept at creating realistic samples, fooling the discriminator about half the time.
 This dynamic field of GANs has evolved rapidly, exhibiting remarkable capabilities in generating realistic content in various domains. Notable applications include image-to-image translation tasks and the creation of photorealistic images indistinguishable from real photos, demonstrating the transformative potential of GANs in the field of generative modeling.
 
 # What is GAN model?
 
 ![Global GAN Model](/assets/images/3DGAN-1/globalGANModel.png)
-**GAN** is a machine learning model in which two **neural networks** compete with each other by using ***deep learning*** methods to become more accurate in their predictions. GANs typically run unsupervised and use a cooperative ***zero-sum game framework*** to learn, where one person's gain equals another person's loss.
+**GAN** is a machine learning model in which two neural networks compete with each other by using deep learning methods to become more accurate in their predictions. GANs typically run unsupervised and use a cooperative *zero-sum game framework* to learn, where one person's gain equals another person's loss.
 
 GANs consist of two models, namely, the **generative model** and the **discriminator model**. On the one hand, the generative model is responsible for creating fake data instances that resemble your training data. On the other hand, the discriminator model behaves as a classifier that distinguishes between real data instances from the output of the generator. The generator attempts to deceive the discriminator by generating real images as far as possible, and the discriminator tries to keep from being deceived.
 
@@ -24,20 +26,19 @@ The discriminator penalizes the generator for producing an absurd output. At the
 ![GAN process](/assets/images/3DGAN-1/GANProcess.png)
 
 # How does GAN Model works?
-
 Building block of GAN are composed with 2 neural networks working together.
 
 **1. Generator:** Model that learns to make fake things to look real
 
 **2. Discriminator:** Model that learns to differentiate real from fake
 
->***The goal of generator is to fool the discriminator while discriminator's goal is to distinguish betwen real from fake***
+***The goal of generator is to fool the discriminator while discriminator's goal is to distinguish betwen real from fake***
 
 The keep compete between each other until at the end fakes (generator by generator) look real (discriminator can't differentiate).
 
 ![GAN diagram](/assets/images/3DGAN-1/GANDiagram.png)
-**We notice that what we input to generator is **Noise**, why?**
-**Noise** in this scenario, we can think about it as random small number vector. When we vary the noise on each run(training), it helps ensure that generator will generate different image on the same class on the same class based on the data that feed into discriminator and got feed back to the generator.
+We notice that what we send as input to the generator is **Noise**, why?
+Noise in this scenario, we can think about it as random small number vector. When we vary the noise on each run(training), it helps ensure that generator will generate different image on the same class on the same class based on the data that feed into discriminator and got feed back to the generator.
 
 ![noise generator](/assets/images/3DGAN-1/noiseGenerator.png)
 
@@ -48,9 +49,11 @@ The generator model generated images from **random noise(z)** and then learns ho
 
 # Metrics of GAN models
 
+Metrics are some tools that help us to know if our model is efficient or not and how to improve it.
+
 **1. Kullback–Leibler and Jensen–Shannon Divergence**
 
-Let us talk about two metrics for quantifying the similarity between two probability distributions.
+Let's talk about two metrics for quantifying the similarity between two probability distributions.
 
 (1) [KL (Kullback–Leibler) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) measures how one probability distribution ***p*** diverges from a second expected probability distribution ***q***.
 
@@ -58,7 +61,7 @@ $D_{KL}(p||q) = \int_x \mathrm{p(x)}log\frac{p(x)}{q(x)}d_{x}$
 
 D(KL) achieves the minimum zero when ***p(x) == q(x)*** everywhere. It is noticeable according to the formula that KL divergence is asymmetric. In cases where ***p(x)*** is close to zero, but ***q(x)*** is significantly non-zero, the ***q’s*** effect is disregarded. It could cause buggy results when we just want to measure the similarity between two equally important distributions.
 
-(2) [Jensen–Shannon Divergence](https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence) is another measure of similarity between two probability distributions, bounded by [0,1]. JS divergence is symmetric and more smooth. 
+(2) [Jensen–Shannon Divergence](https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence) is another measure of similarity between two probability distributions, bounded in [0,1]. JS divergence is symmetric and more smooth. 
 ![graph KL](/assets/images/3DGAN-2/graph_KL.png)
 
 $D_{JS}(p||q) = \frac{1}{2}D_{KL}(p||\frac{p + q}{2}) + \frac{1}{2}D_{KL}(q||\frac{p + q}{2})$
@@ -67,7 +70,7 @@ Some believe ([Huszar, 2015](https://arxiv.org/pdf/1511.05101.pdf)) that one rea
 
 <u><b>**Small explanation about these metrics with examples**</u></b>
 
-Let's take the example of an image generator that creates images of cats. You have a generator that generates cat images, and you also have a set of real cat images.
+Let's take the example of an image generator that creates images of cat. You have a generator that generates cat images, and you also have a set of real cat images.
 
 The KL (Kullback-Leibler) divergence metric quantifies the difference between the distribution of images generated by the generator and the distribution of real images. Let's assume you have two distributions: one corresponds to the distribution of images generated by the generator (let's call it P), and the other corresponds to the distribution of real images (let's call it Q). The KL divergence between P and Q measures how much information, on average, is needed to represent the differences between these two distributions. A higher value would indicate that the images generated by the generator are very different from the real images.
 
@@ -85,7 +88,7 @@ The Earth Mover's Distance (EMD) is a method to evaluate dissimilarity between t
 
 The Wasserstein distance metric has several advantages over KL and JS divergences. 
 
-- First, it is more stable and often facilitates the convergence of GAN model training. It also makes it possible to better take into account mass differences between distributions, which can be useful when the distributions have different images or modes.
+- First, it is more stable and often facilitate the convergence of GAN model training. It also makes it possible to better take into account mass differences between distributions, which can be useful when the distributions have different images or modes.
 
 - The Wasserstein distance metric has an interesting geometric interpretation. It can be thought of as the minimum amount of work required to move mass from one distribution to another, where each unit of mass is considered a "pile of dirt" and the cost of moving is determined by a cost function. This geometric interpretation gives it interesting properties in terms of stability and convergence.
 
