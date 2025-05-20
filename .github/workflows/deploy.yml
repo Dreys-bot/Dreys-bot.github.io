@@ -20,6 +20,24 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Version d'Node.js plus récente
+
+      - name: Install system dependencies
+        run: sudo apt-get install -y librsvg2-dev libvips-dev
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install project dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Rebuild sharp
+        run: pnpm rebuild sharp --platform=linuxmusl --arch=x64
+
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
