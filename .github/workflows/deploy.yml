@@ -36,7 +36,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Reinstall sharp
-        run: npm install --platform=linux --arch=x64 sharp
+        run: npm rebuild --platform=linux --arch=x64 sharp
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
