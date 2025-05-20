@@ -32,7 +32,7 @@ jobs:
         run: |
           pnpm config set store-dir ~/.pnpm-store
           pnpm install --no-frozen-lockfile
-          pnpm add sharp@latest --platform=linuxmusl --arch=x64
+          # pnpm add sharp@latest --platform=linuxmusl --arch=x64
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
