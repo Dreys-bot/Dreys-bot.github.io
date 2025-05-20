@@ -36,7 +36,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Rebuild sharp
-        run: pnpm rebuild sharp --platform=linuxmusl --arch=x64
+        run: pnpm rebuild sharp # --platform=linuxmusl --arch=x64
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
