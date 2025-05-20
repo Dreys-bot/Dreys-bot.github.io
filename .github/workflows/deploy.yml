@@ -33,7 +33,7 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install project dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       - name: Rebuild sharp
         run: pnpm rebuild sharp --platform=linuxmusl --arch=x64
