@@ -21,7 +21,6 @@ package-lock.json
 # exclude code editor stuff
 .idea
 .vscode/
-.github/
 
 *.env
 
