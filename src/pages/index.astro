@@ -1,4 +1,4 @@
-import type { IFrontmatter } from 'astro-boilerplate-components';
+<!-- import type { IFrontmatter } from 'astro-boilerplate-components'; -->
 
 import { CTA } from '@/partials/CTA';
 import { Hero } from '@/partials/Hero';
@@ -10,9 +10,9 @@ import type { IProjectFormat } from '@/utils/Interfaces';
 import { sortByDate as sortPosts } from '@/utils/Posts';
 import { sortByDate as sortProjects } from '@/utils/Projects';
 
-const allPosts = await Astro.glob<IFrontmatter>('./posts/*.md');
+<!-- const allPosts = await Astro.glob<IFrontmatter>('./posts/*.md');
 const sortedPosts = sortPosts(allPosts);
-const lastThreePosts = sortedPosts.slice(0, 3);
+const lastThreePosts = sortedPosts.slice(0, 3); -->
 
 const allProjects = await Astro.glob<IProjectFormat>('./projects/*.md');
 const sortedProjects = sortProjects(allProjects);
