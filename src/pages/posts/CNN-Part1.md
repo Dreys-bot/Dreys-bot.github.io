@@ -7,6 +7,8 @@ imgSrc: '/assets/images/CNNs-Trans/cnnspart1.jpg'
 imgAlt: 'Image post'
 ---
 
+# Convolutional Neural Networks (CNNs)
+
 With the rise of deep learning, Convolutional Neural Networks (CNNs) have become a key technology, transforming image and video processing. These specialized neural networks are designed to replicate the functioning of the human visual cortex, allowing machines to analyze images by automatically extracting relevant visual features.
 
 Since their introduction in 1989 for handwritten digit recognition, CNNs have evolved significantly, becoming essential in various fields that require image analysis and complex data processing. Their effectiveness comes from their ability to detect visual patterns with remarkable accuracy, often outperforming traditional computer vision techniques.

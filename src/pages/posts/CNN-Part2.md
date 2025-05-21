@@ -7,7 +7,7 @@ imgSrc: '/assets/images/CNNs-Trans/cnnspart1.jpg'
 imgAlt: 'Image post'
 ---
 
-## Differents types of activation functions
+# Differents types of activation functions
 
 ### Sigmoid Function
 The sigmoid function is one of the most well-known activation functions in artificial intelligence and machine learning. It is defined by the following equation:
