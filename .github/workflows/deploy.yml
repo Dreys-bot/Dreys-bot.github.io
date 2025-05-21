@@ -33,6 +33,9 @@ jobs:
           pnpm config set store-dir ~/.pnpm-store
           pnpm install --no-frozen-lockfile
           npm install sharp@^0.33.0 --os=linux --libc=musl --cpu=x64
+          pnpm approve-builds sharp
+          pnpm store prune
+          pnpm install --force
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
