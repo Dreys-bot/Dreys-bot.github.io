@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import backgroundImage from '../assets/tof1.jpeg';
+---
+
+<div class="relative h-[60vh] w-full overflow-hidden">
+  <!-- Background image -->
+  <Image
+    src={backgroundImage}
+    alt="Background"
+    class="absolute inset-0 object-cover w-full h-full object-center"
+    style="filter: brightness(0.7);"
+  />
+  
+  <!-- Content overlay -->
+  <div class="relative z-10 h-full flex items-center justify-center px-8">
+    <div class="bg-black bg-opacity-40 p-8 rounded-lg max-w-2xl backdrop-blur-sm text-center">
+      <h1 class="text-4xl md:text-6xl text-white mb-4 font-bold">
+        👋 👋 HEY, I'M DJOUPE Audrey
+      </h1>
+      <div class="text-xl md:text-2xl text-white space-y-2">
+        <p>Data Science → ML & DL Engineer</p>
+        <p>Writer</p>
+      </div>
+    </div>
+  </div>
+</div> 
