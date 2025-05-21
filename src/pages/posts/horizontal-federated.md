@@ -16,7 +16,7 @@ Federated learning is a promising machine learning technique that enables multip
 - **Sparing device-server communications** instead of batch-wise gradient uploads
 Among various types of federated learning methods, horizontal federated learning (HFL) is the best-studied category and handles homogeneous feature spaces. The figure shows a typical cross-device FL scenario where a multitude of user devices are coordinated by a central server(at the edge or on the cloud). This article aims to show how horizontal federated learning can be applied to a dataset. I conducted experiments on various cases using CIFAR10 datasets and demonstrated that HFL can achieve excellent performance while ensuring the confidentiality of our data, making it a valuable tool for boosting model performance.
 
-![architecture](/assets/images/FederatedLearning/HFL_global.png)
+![architecture](public/assets/images/FederatedLearning/HFL_global.png)
 
 
 # Architecture of HFL
