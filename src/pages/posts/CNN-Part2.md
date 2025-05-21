@@ -9,7 +9,7 @@ imgAlt: 'Image post'
 
 # Differents types of activation functions
 
-### Sigmoid Function
+## Sigmoid Function
 The sigmoid function is one of the most well-known activation functions in artificial intelligence and machine learning. It is defined by the following equation:
 
 $$f(x) = \frac{1}{1+e^{-x}}$$
@@ -24,7 +24,7 @@ Although the sigmoid function is useful, it has some drawbacks:
 - **Vanishing Gradient Problem**: In deep neural networks, the sigmoid function can cause slow learning, as gradients become too small.
 - **Non-Zero-Centered Output**: Unlike other functions such as tanh, the sigmoid function produces only positive values (between 0 and 1). This can slow down model convergence because it forces the network’s weight updates to be unbalanced, making optimization less efficient.
 
-### Tanh Function
+## Tanh Function
 
 The **Tanh function** (or Hyperbolic Tangent) is an **activation function** used in neural networks. It transforms an input value into a number between **-1 and 1**.
 
@@ -45,7 +45,7 @@ Unlike the **Sigmoid function**, whose outputs are always **positive (between 0 
 **It helps normalize data**
 By keeping values within a **symmetric range (-1 to 1)**, Tanh allows for better **weight adjustments** in the neural network and accelerates learning.
 
-### RELU function
+## RELU function
 
 The **ReLU** (Rectified Linear Unit) function is one of the most widely used activation function in deep learning. It is mathematically defined as:
 
@@ -68,7 +68,7 @@ This means that:
 - ReLU is very simple to compute: it just requires checking whether the input is positive or not.
 - This makes it much faster than other activation functions like Sigmoid or Tanh, which involve exponentials.
 
-### What is vanishing gradient?
+## What is vanishing gradient?
 Before talk about Vanishing gradient , let’s understand neural network weights and how to adjust them with backpropagation.
 
 When training a neural network, such as a Convolutional Neural Network (CNN), the aim is to reduce the error between what the model predicts and what the actual data shows. This is achieved by adjusting the network’s weights. But what are these weights?
@@ -220,7 +220,7 @@ In a **deep network**, the gradient is computed layer by layer, multiplying thes
 
 👉 **Activation layers** allow the network to model complex patterns instead of being limited to simple linear relationships. Once these complex features are extracted, pooling layers are used to reduce the data size while retaining the most important information. They act as a summary of the previous layers, making the network more efficient and less computationally demanding.
 
-### Pooling Layers
+## Pooling Layers
 **Pooling** is an operation that reduces the size of feature maps while preserving key information. It works by grouping neighboring pixels and summarizing their content into a single value. This helps:
 
 ✅ **Reduce data dimensions**, speeding up computations.
@@ -298,7 +298,7 @@ Pooling is typically applied after convolution and activation layers. Here’s h
 - **Activation Layers** (like ReLU) highlight important features by introducing non-linearity.
 - **Pooling Layers** simplify the output by summarizing the most important information, reducing the data size and computational complexity.
 
-### Flatten Layers
+## Flatten Layers
 
 1️⃣ **What is Flattening?**
 Flattening is a simple but essential step in a Convolutional Neural Network (CNN).
@@ -312,7 +312,7 @@ Convolutional and pooling layers process images as matrices (2D or 3D). However,
 
 ✅ **Flattening converts the feature map into a format that the fully connected layers can process.**
 
-### Fully Connected Layers (FC)
+## Fully Connected Layers (FC)
 **Fully connected layers**, also called dense layers, are a fundamental component of neural networks, especially in Convolutional Neural Networks (CNNs) and Deep Neural Networks (DNNs).
 
 In a fully connected layer, every neuron is connected to all the neurons in the previous layer. This is in contrast to convolutional layers, where the connections are local and limited to small regions of the input (e.g., receptive fields).
