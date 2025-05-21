@@ -1,0 +1,178 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Section } from 'astro-boilerplate-components';
+
+const certifications = [
+  {
+    title: "AWS Mastery for Data Scientists & DevOps",
+    provider: "Udemy",
+    date: "mars 2024",
+    expiry: "mars 2024",
+    id: "UC-d0565e5b-1ed8-4018-9457-eea1832d1fb0",
+    image: "/assets/images/certifications/udemy.png",
+    skills: [
+      "CI/CD Pipeline",
+      "Tensorflow, Pytorch, keras, numpy, pandas, scikit-learn",
+      "Data mining, data visualisation",
+      "Développement et deploiement d'applications sur AWS",
+      "Cloud Computing"
+    ]
+  },
+  {
+    title: "Core Designer",
+    provider: "Dataiku",
+    date: "févr. 2023",
+    id: "xtouyxdfy9i",
+    image: "/assets/images/certifications/dataiku.png"
+  },
+  {
+    title: "Dataiku ML Practitioner",
+    provider: "Dataiku",
+    date: "févr. 2023",
+    id: "agzfua4m9vqi",
+    image: "/assets/images/certifications/dataiku.png",
+    skills: [
+      "Tensorflow, Pytorch, keras, numpy, pandas, scikit-learn",
+      "Data cleaning, Data mining, data visualisation",
+      "Deploiement des modèles IA sur Dataiku",
+      "Traitement des données",
+      "Conception des pipelines de mises en production des modèles IA",
+      "MLflow with Dataiku"
+    ]
+  },
+  {
+    title: "Machine Learning with Python",
+    provider: "IBM",
+    date: "févr. 2023",
+    image: "/assets/images/certifications/IBM.png",
+    skills: [
+      "Tensorflow, Pytorch, keras, numpy, pandas, scikit-learn",
+      "Utilisation des algorithmes Machine Learning",
+      "Deep learning",
+      "Tensorflow model conception"
+    ]
+  },
+  {
+    title: "Data Analysis with Python",
+    provider: "freeCodeCamp",
+    date: "janv. 2022",
+    image: "/assets/images/certifications/freecodecamp.png"
+  },
+  {
+    title: "Scientific Computing with Python",
+    provider: "freeCodeCamp",
+    date: "janv. 2022",
+    image: "/assets/images/certifications/freecodecamp.png"
+  },
+  {
+    title: "Front End Development Libraries",
+    provider: "freeCodeCamp",
+    date: "déc. 2021",
+    image: "/assets/images/certifications/freecodecamp.png"
+  },
+  {
+    title: "JavaScript Algorithms and Data Structures",
+    provider: "freeCodeCamp",
+    date: "oct. 2021",
+    image: "/assets/images/certifications/freecodecamp.png"
+  },
+  {
+    title: "Responsive Web Design",
+    provider: "freeCodeCamp",
+    date: "oct. 2021",
+    image: "/assets/images/certifications/freecodecamp.png"
+  },
+  {
+    title: "Sensibilisation à la Sécurité Numérique",
+    provider: "ANSSI - Agence nationale de la sécurité des systèmes d'information",
+    date: "janv. 2021",
+    image: "/assets/images/certifications/ANSSI.png"
+  }
+];
+---
+
+<Layout title="Certifications">
+  <Section>
+    <div class="mx-auto max-w-7xl px-4 py-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">Certifications</h1>
+      
+      <div class="grid gap-8">
+        {certifications.map((cert) => (
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+              <div class="flex items-start gap-4">
+                {cert.image && (
+                  <img
+                    src={cert.image}
+                    alt={`${cert.provider} logo`}
+                    class="w-16 h-16 object-contain"
+                  />
+                )}
+                <div class="flex-1">
+                  <h2 class="text-xl font-bold text-gray-900">{cert.title}</h2>
+                  <p class="text-gray-600">{cert.provider}</p>
+                  <div class="flex gap-4 text-sm text-gray-500 mt-1">
+                    <p>Date de délivrance : {cert.date}</p>
+                    {cert.expiry && <p>Expire le {cert.expiry}</p>}
+                  </div>
+                  {cert.id && (
+                    <p class="text-sm text-gray-500 mt-1">
+                      Identifiant de la certification : {cert.id}
+                    </p>
+                  )}
+                </div>
+              </div>
+              
+              {cert.skills && cert.skills.length > 0 && (
+                <div class="mt-4">
+                  <h3 class="font-semibold text-gray-900 mb-2">Compétences :</h3>
+                  <div class="flex flex-wrap gap-2">
+                    {cert.skills.map((skill) => (
+                      <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  /* Animation d'entrée pour les cartes */
+  .grid > div {
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation au survol */
+  .grid > div:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-out;
+  }
+
+  /* Style pour les badges de compétences */
+  .bg-purple-50 {
+    transition: all 0.2s ease-out;
+  }
+
+  .bg-purple-50:hover {
+    background-color: theme('colors.purple.100');
+  }
+</style> 

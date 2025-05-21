@@ -1,0 +1,77 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Get the current path
+const currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Portfolio of DJOUPE PENE Audrey - Data Science, ML & DL Engineer">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-gray-900">
+    <nav class="fixed w-full top-0 z-50 flex justify-between items-center px-8 py-4 bg-gray-900/80 backdrop-blur-sm">
+      <div class="text-xl font-bold">
+        <a href="/Dreys-bot.github.io/" class={currentPath === "/Dreys-bot.github.io/" ? "text-purple-400" : "text-white hover:text-purple-400 transition-colors"}>
+          DJOUPE PENE Audrey
+        </a>
+      </div>
+      
+      <div class="flex gap-8">
+        <a href="/Dreys-bot.github.io/" 
+           class={currentPath === "/Dreys-bot.github.io/" ? "text-purple-400" : "text-white hover:text-purple-400 transition-colors"}>
+          About
+        </a>
+        <a href="/Dreys-bot.github.io/projects/" 
+           class={currentPath === "/Dreys-bot.github.io/projects/" ? "text-purple-400" : "text-white hover:text-purple-400 transition-colors"}>
+          Projects
+        </a>
+        <a href="/Dreys-bot.github.io/papers/" 
+           class={currentPath === "/Dreys-bot.github.io/papers/" ? "text-purple-400" : "text-white hover:text-purple-400 transition-colors"}>
+          Papers
+        </a>
+        <a href="/Dreys-bot.github.io/certifications/" 
+           class={currentPath === "/Dreys-bot.github.io/certifications/" ? "text-purple-400" : "text-white hover:text-purple-400 transition-colors"}>
+          Certifications
+        </a>
+        <a href="#contact" 
+           class="text-white hover:text-purple-400 transition-colors">
+          CONTACT
+        </a>
+      </div>
+    </nav>
+
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
+  }
+  
+  html {
+    font-family: system-ui, sans-serif;
+    scroll-behavior: smooth;
+    background-color: #111827; /* gray-900 */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+</style> 

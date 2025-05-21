@@ -1,31 +1,170 @@
 ---
-import type { IFrontmatter } from 'astro-boilerplate-components';
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import profileImage from '../assets/tof2.jpeg';
+import Footer from '../components/Footer.astro';
 
-import { CTA } from '@/partials/CTA';
-import { Hero } from '@/partials/Hero';
-import { RecentPosts } from '@/partials/RecentPosts';
-import { RecentProjects } from '@/partials/RecentProjects';
-import Base from '@/templates/Base.astro';
-import { AppConfig } from '@/utils/AppConfig';
-import type { IProjectFormat } from '@/utils/Interfaces';
-import { sortByDate as sortPosts } from '@/utils/Posts';
-import { sortByDate as sortProjects } from '@/utils/Projects';
+interface Experience {
+  company: string;
+  role: string;
+  description: string;
+  details: string[];
+}
 
-const allPosts = await Astro.glob<IFrontmatter>('./posts/*.md');
-const sortedPosts = sortPosts(allPosts);
-const lastThreePosts = sortedPosts.slice(0, 3);
+const experiences: Experience[] = [
+  {
+    company: 'BpiFrance',
+    role: 'Data Scientist Developer',
+    description: 'Development of a Chatbot to Improve Financial Strategies',
+    details: [
+      'Data collection and structuring from various sources to prepare datasets.',
+      'Selection and fine-tuning of Llama models to meet the client\'s specific needs.',
+      'Backend Development: Integration of AI models into a secure and scalable architecture.',
+      'Optimization of CPU and memory resources to ensure optimal performance.',
+      'Security of sensitive data and secure integration into a Docker environment.',
+      'Deployment of the system in production on an ultra-secure VPS.'
+    ]
+  },
+  {
+    company: 'GROUP VERDON',
+    role: 'AI Engineer',
+    description: 'Development of a personalized chatbot for the company',
+    details: [
+      'Analysis, processing and cleaning of the company\'s unstructured database for better use of information.',
+      'Design and implementation of structured and optimized SQL databases for storing and managing data in vectors.',
+      'Development of a custom intelligent chatbot, trained on internal company data using advanced LLM models (Llama and DeepSeek) locally.',
+      'Chatbot optimization to ensure relevant responses using RAG and Search Engine methods.'
+    ]
+  },
+  {
+    company: 'TOTALEnergies',
+    role: 'Data Scientist Consultant',
+    description: 'Detection of emotion, gender and age on an embedded system to assess TotalEnergies customer satisfaction',
+    details: [
+      'Carrying out an in-depth benchmark of existing data and solutions to align the POC with TotalEnergies\' specific needs',
+      'Selection and analysis of relevant images for training 3 detection models (age, gender and emotion)',
+      'Training and optimizing each detection model on data for real-time operation',
+      'Integration of the 3 detection models into the embedded system for extracting the age, emotion and gender of customers, then producing dynamic statistics on the results.'
+    ]
+  },
+  {
+    company: 'CAPGEMINI ENGINEERING',
+    role: 'Data Scientist Consultant',
+    description: 'Development of a model to assist in the diagnosis of patient illnesses',
+    details: [
+      'Carrying out a benchmark of existing data and solutions to align the methods to be used with the needs of the project.',
+      'Collection and implementation of an ETL pipeline for processing more than 10,000 radiographic images improving their quality using Azure Data factory, Azure Synapse Analytics, Azure Data Lake Gen 2, Databricks, Azure Key Vault.',
+      'Data visualization and rebalancing for analysis to optimize model training.',
+      'Development of a high-performance AI model (87% accuracy) integrated into a web application for doctors, with a CI/CD pipeline for fast and reliable deployments (Docker, Git, AWS), ensuring fast and continuous updates.'
+    ]
+  }
+];
 
-const allProjects = await Astro.glob<IProjectFormat>('./projects/*.md');
-const sortedProjects = sortProjects(allProjects);
-const lastThreeProjects = sortedProjects.slice(0, 3);
+interface Education {
+  school: string;
+  degree: string;
+  courses: string[];
+}
 
-const { title } = AppConfig;
-const { description } = AppConfig;
+const education: Education[] = [
+  {
+    school: 'ESILV (Ecole Supérieure d\'Ingénieures de Léonard de Vinci)',
+    degree: 'M.S. in Computer Science',
+    courses: ['Mathematics', 'Statistics', 'Machine Learning', 'Data Analysis', 'Data Visualization', 'Web Scraping', 'Data Processing', 'Computer Vision', 'Data Mining']
+  },
+  {
+    school: '3IL - Limoges',
+    degree: 'Licence in Web Development',
+    courses: ['Java', 'SQL', 'Matlab', 'PHP', 'PowerShell', 'Bash', 'Project management', 'Statistics', 'HTML', 'React']
+  }
+];
 ---
 
-<Base head={{ title, description }}>
-  <Hero />
-  <RecentPosts postList={lastThreePosts} />
-  <RecentProjects projectList={sortedProjects} />
-  <CTA />
-</Base>
+<Layout title="DJOUPE PENE Audrey - Portfolio">
+  <main class="min-h-screen pt-20">
+    <!-- About Section -->
+    <section class="py-16">
+      <div class="max-w-6xl mx-auto px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-start">
+          <div class="relative">
+            <Image
+              src={profileImage}
+              alt="DJOUPE PENE Audrey"
+              class="rounded-lg shadow-xl sticky top-24"
+              width={500}
+              height={600}
+              style="object-fit: cover;"
+            />
+          </div>
+          
+          <div class="space-y-6 text-white">
+            <h1 class="text-4xl font-bold mb-4">About Me</h1>
+            <p class="text-lg text-gray-300">
+              Hello! I'm Audrey DJOUPE PENE, a passionate Data Scientist and Machine Learning Engineer. 
+              I specialize in developing innovative solutions using cutting-edge AI technologies.
+            </p>
+            
+            <div class="space-y-4">
+              <h2 class="text-2xl font-semibold text-white">Skills</h2>
+              <ul class="list-disc list-inside text-gray-300 space-y-2">
+                <li>Machine Learning & Deep Learning</li>
+                <li>Data Analysis & Visualization</li>
+                <li>Python, TensorFlow, PyTorch</li>
+                <li>Natural Language Processing</li>
+                <li>Statistical Analysis</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section class="py-16 bg-gray-800/50">
+      <div class="max-w-6xl mx-auto px-8">
+        <h2 class="text-4xl font-bold text-white mb-12 text-center">WORK EXPERIENCE</h2>
+        <div class="space-y-12">
+          {experiences.map((exp) => (
+            <div class="bg-gray-900/50 rounded-lg p-8 backdrop-blur-sm">
+              <h3 class="text-2xl font-bold text-purple-400">{exp.company}</h3>
+              <p class="text-xl text-gray-300 mt-2">Role: {exp.role}</p>
+              <p class="text-lg text-gray-400 mt-4 italic">{exp.description}</p>
+              <ul class="mt-6 space-y-3 text-gray-300 list-disc list-inside">
+                {exp.details.map((detail) => (
+                  <li>{detail}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="py-16">
+      <div class="max-w-6xl mx-auto px-8">
+        <h2 class="text-4xl font-bold text-white mb-12 text-center">EDUCATION</h2>
+        <div class="space-y-12">
+          {education.map((edu) => (
+            <div class="bg-gray-900/50 rounded-lg p-8 backdrop-blur-sm">
+              <h3 class="text-2xl font-bold text-purple-400">{edu.school}</h3>
+              <p class="text-xl text-gray-300 mt-2">{edu.degree}</p>
+              <div class="mt-6">
+                <h4 class="text-lg font-semibold text-white mb-4">Courses:</h4>
+                <div class="flex flex-wrap gap-2">
+                  {edu.courses.map((course) => (
+                    <span class="px-3 py-1 bg-purple-900/50 text-purple-200 rounded-full text-sm">
+                      {course}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>
