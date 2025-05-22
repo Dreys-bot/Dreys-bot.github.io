@@ -26,5 +26,6 @@ const { description } = AppConfig;
   <Hero />
   <RecentPosts postList={lastThreePosts} />
   <RecentProjects projectList={sortedProjects} />
-  <CTA client:load />
+  <!-- <CTA client:only="react" /> -->
+  <CTA client:only="react" />
 </Base>
