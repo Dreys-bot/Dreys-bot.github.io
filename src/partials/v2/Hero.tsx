@@ -1,13 +1,13 @@
 import { Image } from 'astro:assets';
 import { Section } from '@/partials/components/Section';
 
-const Hero = () => (
+const Hero = ({ profileImage }: { profileImage: string }) => (
     <Section>
         <div className="max-w-6xl mx-auto px-8">
             <div className="grid md:grid-cols-2 gap-12 items-start">
                 <div className="relative">
                 <Image
-                    src="/assets/images/me/tof2.jpeg"
+                    src={profileImage}
                     alt="DJOUPE PENE Audrey"
                     class="rounded-lg shadow-xl sticky top-24"
                     width={500}
