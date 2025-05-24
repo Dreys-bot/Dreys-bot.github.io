@@ -11,7 +11,7 @@ import { AppConfig } from '@/utils/AppConfig';
 import type { IProjectFormat } from '@/utils/Interfaces';
 import { sortByDate as sortPosts } from '@/utils/Posts';
 import { sortByDate as sortProjects } from '@/utils/Projects';
-
+import { WorkExperiences } from '@/partials/v2/WorkExperiences';
 const allPosts = await Astro.glob<IFrontmatter>('./posts/*.md');
 const sortedPosts = sortPosts(allPosts);
 const lastThreePosts = sortedPosts.slice(0, 3);
@@ -25,7 +25,8 @@ const { description } = AppConfig;
 ---
 
 <Base head={{ title, description }}>
-  <Hero profileImage="/assets/images/me/tof2.jpeg" />
+  <Hero />
+  <WorkExperiences />
   <RecentPosts postList={lastThreePosts} />
   <RecentProjects projectList={sortedProjects} />
   <CTA />
