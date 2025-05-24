@@ -1,18 +1,17 @@
-import { Image } from 'astro:assets';
 import { Section } from '@/partials/components/Section';
 
-const Hero = ({ profileImage }: { profileImage: string }) => (
+const Hero = () => (
     <Section>
         <div className="max-w-6xl mx-auto px-8">
             <div className="grid md:grid-cols-2 gap-12 items-start">
                 <div className="relative">
-                <Image
-                    src={profileImage}
+                <img
+                    src="/assets/images/me/tof2.jpeg"
                     alt="DJOUPE PENE Audrey"
-                    class="rounded-lg shadow-xl sticky top-24"
+                    className="rounded-lg shadow-xl sticky top-24"
                     width={500}
                     height={600}
-                    style="object-fit: cover;"
+                    style={{objectFit: "cover"}}
                 />
                 </div>
                 
